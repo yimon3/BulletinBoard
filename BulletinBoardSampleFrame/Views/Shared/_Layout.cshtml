@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - SCM Bulletin Board</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("usage", required: false)
+    @RenderSection("script", required: false)
+</head>
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">SCM BulletinBoard</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Users", "User", "User")</li>
+                <li>@Html.ActionLink("User", "About", "Home")</li>
+                <li>@Html.ActionLink("Posts", "PostView", "Post")</li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>@Html.ActionLink("LogInUsername", "Login", "Login")</li>
+                <li>@Html.ActionLink("LogOut", "Logout", "Logout")</li>
+            </ul>
+        </div>
+    </nav>
+
+    
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - SCM Bulletin Board</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

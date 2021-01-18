@@ -1,0 +1,46 @@
+﻿@model BulletinBoardSampleFrame.ViewModel.Post.PostViewModel
+@{
+    ViewBag.Title = "CreatePost";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section script
+{
+    <script src="~/Resource/script/jquery.clearbutton.js"></script>
+}
+<h2>Create Post</h2>
+<br />
+@using (Html.BeginForm("ConfirmPost", "Post"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <form class="form-horizontal" id="form1">
+        <div class="col-sm-2">
+            @Html.LabelFor(m => m.title)
+        </div>
+        <div class="col-sm-3">
+            @Html.TextBoxFor(m => m.title, new { @class = "form-control", required = "required" })
+            @Html.ValidationMessageFor(m => m.title)
+        </div>
+        <label style="color: red">*</label>
+        <br /><br />
+        <div class="form-group">
+            <div class="col-sm-2">
+                @Html.LabelFor(m => m.description)
+            </div>
+            <div class="col-sm-3">
+                @Html.TextBoxFor(m => m.description, new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(m => m.description)
+            </div>
+            <label style="color: red">*</label>
+        </div><br /><br />
+        <div class="form-group">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-3">
+                <button type="submit" class="btn btn-primary">Confirm</button>
+                <input type="button" id="btnClear" value="Clear" />
+            </div>
+        </div>
+    </form>
+}
+
+
