@@ -65,5 +65,20 @@ namespace BulletinBoardSampleFrame.Controllers
             postServices.ConfirmPost(postData);
             return RedirectToAction("PostView", postData);
         }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            postServices.DeletePost(id);
+            return RedirectToAction("PostView");
+        }
+
+
+        public ActionResult Search(string search)
+        {
+            var postList = postServices.ShowPostByKeyword(search);
+
+            return View("PostView", postList);
+        }
     }
 }

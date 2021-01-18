@@ -128,5 +128,20 @@ namespace BulletinBoardSampleFrame.DAO
                 db.SaveChanges();
             }
         }
+
+        public void DeletePost(int postId)
+        {
+            var data = (from item in db.posts
+
+                        where item.id == postId
+
+                        select item).SingleOrDefault();
+
+            data.deleted_at = DateTime.Now;
+            data.deleted_user_id = data.create_user_id;
+
+            db.posts.Remove(data);
+            db.SaveChanges();
+        }
     }
 }

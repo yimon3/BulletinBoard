@@ -36,5 +36,16 @@ namespace BulletinBoardSampleFrame.Services
         {
             postDAO.EditPost(postData);
         }
+
+        public IEnumerable<PostViewModel> ShowPostByKeyword(string search)
+        {
+            var postList = postDAO.getPostList(search);
+            return postList;
+        }
+
+        public void DeletePost(int postId)
+        {
+            postDAO.DeletePost(postId);
+        }
     }
 }
