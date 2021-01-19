@@ -88,19 +88,11 @@ namespace BulletinBoardSampleFrame.DAO
             return getPostsByKeyword(search);
         }
 
-        public void confirmPost(PostViewModel postData)
+        public void confirmPost(post postData)
         {
             try
             {
-                post newpost = new post();
-                newpost.title = postData.title;
-                newpost.description = postData.description;
-                newpost.create_user_id = postData.id;
-                newpost.updated_user_id = postData.id;
-                newpost.created_at = DateTime.Now;
-                newpost.updated_at = DateTime.Now;
-
-                db.posts.Add(newpost);
+                db.posts.Add(postData);
                 db.SaveChanges();
             }
             catch (DbEntityValidationException e)

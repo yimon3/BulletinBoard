@@ -12,11 +12,13 @@
                 @Html.LabelFor(model => model.title)
             </div>
                 @Html.DisplayFor(model => model.title)
+                @Html.HiddenFor(model => model.title)
         </div><br /><br />
         <div class="form-group">
             <div class="col-sm-3">
                 @Html.LabelFor(model => model.description)
             </div>
+                @Html.HiddenFor(model => model.description)
                 @Html.DisplayFor(model => model.description)
         </div><br /><br />
         <div class="form-group">

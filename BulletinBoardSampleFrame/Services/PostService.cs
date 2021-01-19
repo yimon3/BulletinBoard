@@ -22,7 +22,7 @@ namespace BulletinBoardSampleFrame.Services
             return postList;
         }
 
-        public void ConfirmPost(PostViewModel postData)
+        public void ConfirmPost(post postData)
         {
             postDAO.confirmPost(postData);
         }

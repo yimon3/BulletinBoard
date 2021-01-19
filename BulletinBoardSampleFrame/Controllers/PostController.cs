@@ -62,7 +62,15 @@ namespace BulletinBoardSampleFrame.Controllers
         [HttpPost]
         public ActionResult Save(PostViewModel postData)
         {
-            postServices.ConfirmPost(postData);
+            post newpost = new post();
+            newpost.title = postData.title;
+            newpost.description = postData.description;
+            newpost.create_user_id = 1;
+            newpost.updated_user_id = 1;
+            newpost.created_at = DateTime.Now;
+            newpost.updated_at = DateTime.Now;
+            postServices.ConfirmPost(newpost);
+
             return RedirectToAction("PostView", postData);
         }
 
