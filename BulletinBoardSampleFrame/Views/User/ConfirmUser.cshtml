@@ -1,0 +1,69 @@
+﻿@model BulletinBoardSampleFrame.ViewModel.User.UserViewModel
+@{
+    ViewBag.Title = "ConfirmUser";
+}
+
+<h2>Creat User Confirmation</h2>
+<br />
+@using (Html.BeginForm("Save","User"))
+{
+    <form class="form-horizontal">
+        <div class="form-group">
+            <div class="col-sm-3">
+                @Html.LabelFor(m => m.name)
+            </div>
+            @Html.DisplayFor(m => m.name, new { @class = "form-control" })
+            @Html.HiddenFor(m => m.name)
+        </div><br />
+        <div class="form-group">
+            <div class="col-sm-3">
+                @Html.LabelFor(m => m.email)
+            </div>
+            @Html.DisplayFor(m => m.email, new { @class = "form-control" })
+            @Html.HiddenFor(m => m.email)
+        </div><br />
+        <div class="form-group">
+            <div class="col-sm-3">
+                @Html.LabelFor(m => m.password)
+            </div>
+            @Html.DisplayFor(m => m.password, new { @class = "form-control" })
+            @Html.HiddenFor(m => m.password)
+        </div><br />
+        <div class="form-group">
+            <div class="col-sm-3">
+                @Html.LabelFor(m => m.type)
+            </div>
+            @Html.DisplayFor(m => m.type, new { @class = "form-control" })
+            @Html.HiddenFor(m => m.type)
+        </div><br />
+        <div class="form-group">
+            <div class="col-sm-3">
+                @Html.LabelFor(m => m.phone)
+            </div>
+            @Html.DisplayFor(m => m.phone, new { @class = "form-control" })
+            @Html.HiddenFor(m => m.phone)
+        </div><br />
+        <div class="form-group">
+            <div class="col-sm-3">
+                @Html.LabelFor(m => m.dob)
+            </div>
+            @Html.DisplayFor(m => m.dob, new { @class = "form-control" })
+            @Html.HiddenFor(m => m.dob)
+        </div><br />
+        <div class="form-group">
+            <div class="col-sm-3">
+                @Html.LabelFor(m => m.address)
+            </div>
+            @Html.DisplayFor(m => m.address, new { @class = "form-control" })
+            @Html.HiddenFor(m => m.address)
+        </div><br /><br />
+        <div class="form-group">
+            <div class="col-sm-3">
+                <button type="submit" class="btn btn-primary">Create</button>
+                <input type="reset" value="Cancel" />
+            </div>
+        </div>
+    </form>
+}
+<br>
+

@@ -129,6 +129,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="DAO\UserDAO.cs" />
     <Compile Include="Models\BulletinBoardModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -154,6 +156,7 @@
       <DependentUpon>BulletinBoardModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\CommonConstant.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="Utility\ValidationUtility.cs" />
     <Compile Include="Services\PostService.cs" />
     <Compile Include="Controllers\PostController.cs" />
@@ -165,6 +168,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\Login\LoginModel.cs" />
     <Compile Include="ViewModel\Post\PostViewModel.cs" />
+    <Compile Include="ViewModel\User\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Models\BulletinBoardModel.Context.tt">
@@ -183,6 +187,7 @@
     <Content Include="Resources\content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Resources\css\bootstrap-datetimepicker.css" />
+    <Content Include="Resources\css\jquery-ui.min.css" />
     <Content Include="Resources\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Resources\content\Site.css" />
@@ -233,6 +238,8 @@
     <Content Include="Views\Post\CreatePost.cshtml" />
     <Content Include="Views\Post\EditPost.cshtml" />
     <Content Include="Views\Post\ConfirmPost.cshtml" />
+    <Content Include="Views\User\ConfirmUser.cshtml" />
+    <Content Include="Views\User\User.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
