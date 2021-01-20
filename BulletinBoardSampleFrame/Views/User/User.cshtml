@@ -83,9 +83,8 @@
                 @Html.LabelFor(m => m.profile)
             </div>
             <div class="col-sm-3">
-                <input type='file' id="imgInp" class="form-control" required="required" />
+                @Html.TextBoxFor(m => m.profile, new { type = "file" , id= "imgInp" , @class="form-group" , required="required"})
                 <img id="profile" src="#" alt="picture" width="100" />
-                @Html.HiddenFor(m=>m.profile)
             </div>
             <label style="color: red">*</label>
         </div><br /><br /><br /><br />
