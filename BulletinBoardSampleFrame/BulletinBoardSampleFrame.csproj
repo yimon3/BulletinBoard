@@ -241,6 +241,9 @@
     <Content Include="Views\User\ConfirmUser.cshtml" />
     <Content Include="Views\User\User.cshtml" />
     <Content Include="Views\Post\ConfirmUpdatePost.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\UserList.cshtml" />
+    <Content Include="Views\User\UserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

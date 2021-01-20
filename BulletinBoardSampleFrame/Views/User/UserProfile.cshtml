@@ -1,0 +1,61 @@
+﻿@model BulletinBoardSampleFrame.ViewModel.User.UserViewModel
+@{
+    ViewBag.Title = "UserProfile";
+}
+<p style="text-align:center">
+    <input type="button" class="btn btn-success" value="Edit" onclick="location.href='@Url.Action("Edit", "User")'" />
+</p>
+<h2>User Profile</h2>
+<br /><br />
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        <div class="col-sm-3">
+            @Html.LabelFor(m => m.name)
+        </div>
+            @Html.DisplayFor(m => m.name)
+            @Html.HiddenFor(m => m.name)
+    </div>
+    <div class="form-group">
+        <div class="col-sm-3">
+        </div>
+        @Html.DisplayFor(m => m.profile)
+        @Html.HiddenFor(m => m.profile)
+    </div>
+    <div class="form-group">
+        <div class="col-sm-3">
+            @Html.LabelFor(m => m.email)
+        </div>
+            @Html.DisplayFor(m => m.email)
+            @Html.HiddenFor(m => m.email)
+    </div>
+    <div class="form-group">
+        <div class="col-sm-3">
+            @Html.LabelFor(m => m.type)
+        </div>
+            @Html.DisplayFor(m => m.type)
+            @Html.HiddenFor(m => m.type)
+    </div>
+    <div class="form-group">
+        <div class="col-sm-3">
+            @Html.LabelFor(m => m.phone)
+        </div>
+        @Html.DisplayFor(m => m.phone)
+        @Html.HiddenFor(m => m.phone)
+    </div>
+    <div class="form-group">
+        <div class="col-sm-3">
+            @Html.LabelFor(m => m.dob)
+        </div>
+        @Html.DisplayFor(m => m.dob)
+        @Html.HiddenFor(m => m.dob)
+    </div>
+    <div class="form-group">
+        <div class="col-sm-3">
+            @Html.LabelFor(m => m.address)
+        </div>
+        @Html.DisplayFor(m => m.address)
+        @Html.HiddenFor(m => m.address)
+    </div><br />
+}
+
