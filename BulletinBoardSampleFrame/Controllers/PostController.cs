@@ -33,14 +33,36 @@ namespace BulletinBoardSampleFrame.Controllers
             return View("PostView", postList);
         }
 
+        /// <summary>
+        /// This is to get post for edit
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="postView"></param>
+        /// <returns></returns>
         [HttpGet]
-        public ActionResult EditPost(int id)
+        public ActionResult EditPost(int id, PostViewModel postView)
         {
-            postServices.EditPost(id);
+            postServices.EditPost(id, postView);
 
-            return View("EditPost");
+            return View("EditPost", postView);
         }
 
+        /// <summary>
+        /// This is to confirm post for edit
+        /// </summary>
+        /// <param name="postView"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ConfirmUpdatePost(PostViewModel postView)
+        {
+            return View("ConfirmUpdatePost", postView);
+        }
+
+        /// <summary>
+        /// This is to edit post
+        /// </summary>
+        /// <param name="pVM"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult EditPost(PostViewModel pVM)
         {

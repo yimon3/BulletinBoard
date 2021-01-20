@@ -1,0 +1,39 @@
+﻿@model BulletinBoardSampleFrame.ViewModel.Post.PostViewModel
+@{
+    ViewBag.Title = "ConfirmUpdatePost";
+}
+
+<h2>Update Post Confirmation</h2>
+<br />
+@using (Html.BeginForm("EditPost","Post"))
+{
+    <div class="form-group">
+        <div class="col-sm-3">
+            @Html.LabelFor(m => m.title)
+        </div>
+        @Html.DisplayFor(m => m.title)
+        @Html.HiddenFor(m => m.title)
+    </div>
+    <div class="form-group">
+        <div class="col-sm-3">
+            @Html.LabelFor(m => m.description)
+        </div>
+        @Html.DisplayFor(m => m.description)
+        @Html.HiddenFor(m => m.description)
+    </div>
+    <div class="form-group">
+        <div class="col-sm-3">
+            @Html.LabelFor(m => m.status)
+        </div>
+        @Html.DisplayFor(m => m.status)
+        @Html.HiddenFor(m => m.status)
+    </div><br />
+    <div class="form-group">
+        <div class="col-sm-3">
+            <button type="submit" class="btn btn-primary">Update</button>
+            @Html.ActionLink("Cancel","EditPost","Post", new { @class = "btn btn-default" })
+            @Html.HiddenFor(m=>m.id)
+        </div>
+    </div><br />
+}
+

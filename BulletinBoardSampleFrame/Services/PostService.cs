@@ -27,11 +27,20 @@ namespace BulletinBoardSampleFrame.Services
             postDAO.confirmPost(postData);
         }
 
-        public void EditPost(int id)
+        /// <summary>
+        /// This is to edit post for view
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="postView"></param>
+        public void EditPost(int id, PostViewModel postView)
         {
-            postDAO.EditPost(id);
+            postDAO.EditPost(id, postView);
         }
 
+        /// <summary>
+        /// This is to edit post to database
+        /// </summary>
+        /// <param name="postData"></param>
         public void EditPost(PostViewModel postData)
         {
             postDAO.EditPost(postData);

@@ -130,7 +130,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\UserController.cs" />
-    <Compile Include="DAO\UserDAO.cs" />
+    <Compile Include="DAOs\UserDAO.cs" />
     <Compile Include="Models\BulletinBoardModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -161,7 +161,7 @@
     <Compile Include="Services\PostService.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="DAO\PostDAO.cs" />
+    <Compile Include="DAOs\PostDAO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -240,6 +240,7 @@
     <Content Include="Views\Post\ConfirmPost.cshtml" />
     <Content Include="Views\User\ConfirmUser.cshtml" />
     <Content Include="Views\User\User.cshtml" />
+    <Content Include="Views\Post\ConfirmUpdatePost.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
