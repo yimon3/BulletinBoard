@@ -12,6 +12,10 @@ namespace BulletinBoardSampleFrame.Services
     {
         UserDAO userDAO = new UserDAO();
 
+        /// <summary>
+        /// This is to save user to database
+        /// </summary>
+        /// <param name="userData"></param>
         public void SaveUser(user userData)
         {
             userDAO.SaveUser(userData);

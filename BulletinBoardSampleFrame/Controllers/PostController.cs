@@ -70,17 +70,31 @@ namespace BulletinBoardSampleFrame.Controllers
             return RedirectToAction("PostView");
         }
 
+        /// <summary>
+        /// Get : create post
+        /// </summary>
+        /// <returns></returns>
         public ActionResult CreatePost()
         {
             return View("CreatePost");
         }
 
+        /// <summary>
+        /// This is to confirm post
+        /// </summary>
+        /// <param name="postData"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult ConfirmPost(PostViewModel postData)
         {
             return View("ConfirmPost", postData);
         }
 
+        /// <summary>
+        /// This is to save new post to database
+        /// </summary>
+        /// <param name="postData"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Save(PostViewModel postData)
         {
@@ -96,6 +110,11 @@ namespace BulletinBoardSampleFrame.Controllers
             return RedirectToAction("PostView", postData);
         }
 
+        /// <summary>
+        /// This is for delete post
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Delete(int id)
         {
@@ -103,7 +122,11 @@ namespace BulletinBoardSampleFrame.Controllers
             return RedirectToAction("PostView");
         }
 
-
+        /// <summary>
+        /// This is for search post
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
         public ActionResult Search(string search)
         {
             var postList = postServices.ShowPostByKeyword(search);

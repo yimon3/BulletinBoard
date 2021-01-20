@@ -19,17 +19,27 @@ namespace BulletinBoardSampleFrame.Controllers
             return View();
         }
 
-        public ActionResult User()
+        public new ActionResult User()
         {
             return View();
         }
 
+        /// <summary>
+        /// This is to confirm for new user added to database
+        /// </summary>
+        /// <param name="userViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult ConfirmUser(UserViewModel userViewModel)
         {
             return View("ConfirmUser", userViewModel);
         }
 
+        /// <summary>
+        /// This is to save new user
+        /// </summary>
+        /// <param name="userData"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Save(UserViewModel userData)
         {

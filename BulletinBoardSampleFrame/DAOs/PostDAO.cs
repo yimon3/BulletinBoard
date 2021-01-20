@@ -88,6 +88,10 @@ namespace BulletinBoardSampleFrame.DAO
             return getPostsByKeyword(search);
         }
 
+        /// <summary>
+        /// This is to confirm post to database
+        /// </summary>
+        /// <param name="postData"></param>
         public void confirmPost(post postData)
         {
             try
@@ -133,6 +137,10 @@ namespace BulletinBoardSampleFrame.DAO
             }
         }
 
+        /// <summary>
+        /// This is for delete post
+        /// </summary>
+        /// <param name="postId"></param>
         public void DeletePost(int postId)
         {
             var data = (from item in db.posts

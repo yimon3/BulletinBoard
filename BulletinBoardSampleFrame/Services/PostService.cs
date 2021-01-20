@@ -15,13 +15,16 @@ namespace BulletinBoardSampleFrame.Services
         /// <summary>
         ///     This is to show post list.
         /// </summary>
-        /// <param name="search">Search keyword for Post</param>
         public IEnumerable<PostViewModel> ShowPost()
         {
             var postList = postDAO.getPosts();
             return postList;
         }
 
+        /// <summary>
+        /// This is to confirm post
+        /// </summary>
+        /// <param name="postData"></param>
         public void ConfirmPost(post postData)
         {
             postDAO.confirmPost(postData);
@@ -46,12 +49,21 @@ namespace BulletinBoardSampleFrame.Services
             postDAO.EditPost(postData);
         }
 
+        /// <summary>
+        /// This is to show post by keyword
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
         public IEnumerable<PostViewModel> ShowPostByKeyword(string search)
         {
             var postList = postDAO.getPostList(search);
             return postList;
         }
 
+        /// <summary>
+        /// This is for delete post
+        /// </summary>
+        /// <param name="postId"></param>
         public void DeletePost(int postId)
         {
             postDAO.DeletePost(postId);
