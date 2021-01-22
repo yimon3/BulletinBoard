@@ -53,18 +53,27 @@ namespace BulletinBoardSampleFrame.Controllers
         [HttpPost]
         public ActionResult Save(UserViewModel userData)
         {
+            string ImageName = System.IO.Path.GetFileName(userData.profile);
+            string physicalPath = Server.MapPath("~/Images/" + ImageName);
             user newUser = new user();
             newUser.name = userData.name;
             newUser.email = userData.email;
             newUser.password = userData.password;
-            newUser.type = userData.type;
+            if (userData.type == "user")
+            {
+                newUser.type = "0";
+            }
+            else
+            {
+                newUser.type = "1";
+            }
             newUser.phone = userData.phone;
             newUser.dob = userData.dob;
             newUser.address = userData.address;
-            newUser.profile = userData.profile;
+            newUser.profile = ImageName;
             userService.SaveUser(newUser);
 
-            return RedirectToAction("User",userData);
+            return RedirectToAction("UserList",userData);
         }
 
         /// <summary>

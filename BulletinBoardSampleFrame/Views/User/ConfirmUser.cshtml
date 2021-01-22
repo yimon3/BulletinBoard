@@ -5,7 +5,7 @@
 
 <h2>Creat User Confirmation</h2>
 <br />
-@using (Html.BeginForm("Save","User"))
+@using (Html.BeginForm("Save", "User"))
 {
     <form class="form-horizontal">
         <div class="form-group">
@@ -15,6 +15,12 @@
             @Html.DisplayFor(m => m.name, new { @class = "form-control" })
             @Html.HiddenFor(m => m.name)
         </div><br />
+        <div class="form-group">
+            <div class="col-sm-3">
+            </div>
+            <img src="@Model.profile" width="100" height="100" />
+            @Html.HiddenFor(m => m.profile)
+        </div>
         <div class="form-group">
             <div class="col-sm-3">
                 @Html.LabelFor(m => m.email)
@@ -60,7 +66,7 @@
         <div class="form-group">
             <div class="col-sm-3">
                 <button type="submit" class="btn btn-primary">Create</button>
-                <input type="reset" value="Cancel" />
+                @Html.ActionLink("Cancel", "User", new {@class ="btn btn-danger"})
             </div>
         </div>
     </form>
