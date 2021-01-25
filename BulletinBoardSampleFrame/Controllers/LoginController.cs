@@ -1,21 +1,25 @@
 ﻿using BulletinBoardSampleFrame.Models;
 using BulletinBoardSampleFrame.Services;
 using BulletinBoardSampleFrame.ViewModel.Login;
-using BulletinBoardSampleFrame.ViewModel.Post;
-using System.Data.Entity.Validation;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace BulletinBoardSampleFrame.Controllers
 {
+    /// <summary>
+    /// This is login controller
+    /// </summary>
     public class LoginController : Controller
     {
-        private BulletinBoardEntity db = new BulletinBoardEntity();
+        LoginService loginService = new LoginService();
+
         // GET: Login
         public ActionResult Index()
         {
             return View();
         }
+
         //Get : login
         [HttpGet]
         public ActionResult Login()
@@ -35,7 +39,7 @@ namespace BulletinBoardSampleFrame.Controllers
             {
                 return View(model);
             }
-            var obj = db.users.Where(a => a.email.Equals(model.email) && a.password.Equals(model.password)).FirstOrDefault();
+            var obj = loginService.Login(model);
             if (obj != null)
             {
                 Session["Id"] = obj.id;
@@ -59,6 +63,11 @@ namespace BulletinBoardSampleFrame.Controllers
                 Session["Address"] = obj.address.ToString();
                 Session["Profile"] = obj.profile.ToString();
             }
+            else
+            {
+                ViewData["Message"] = "Email or Password is incorrect";
+                return View(obj);
+            }
             if (Session["Type"].ToString() == "Admin" || Session["Type"].ToString() == "User")
             {
                 return RedirectToAction("PostView", "Post");
@@ -66,10 +75,6 @@ namespace BulletinBoardSampleFrame.Controllers
             if (Session["Type"].ToString() == "Visitor")
             {
                 return RedirectToAction("PostViewForVisitor", "Post");
-            }
-            else
-            {
-                ViewData["Message"] = "Email or Password is incorrect";
             }
             return View(obj);
         }
@@ -82,6 +87,45 @@ namespace BulletinBoardSampleFrame.Controllers
         {
             Session.RemoveAll();
             return RedirectToAction("Login");
+        }
+
+        /// <summary>
+        /// Get : ChangePassword
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// This is to change password 
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ChangePassword(LoginModel login)
+        {
+            var data = loginService.ChangePassword(login);
+            if (data != null)
+            {
+                if (Session["Type"].ToString() == "Visitor")
+                {
+                    return RedirectToAction("PostViewForVisitor", "Post");
+                }
+                else if (login.newPassword != login.confirmPassword)
+                {
+                    ViewData["Message"] = "New Password and Confirm password must same.";
+                    return View(login);
+                }
+            }
+            else
+            {
+                ViewData["Message"] = "Wrong Old Password";
+                return View(login);
+            }
+            return RedirectToAction("PostView", "Post");
         }
     }
 }

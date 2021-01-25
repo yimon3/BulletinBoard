@@ -13,73 +13,75 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <h1>SCM Bulletin Board</h1>
-    <div class="row">
-        <div class="col-md-8">
-            <section id="loginForm">
-                @using (Html.BeginForm("Login", "Login", FormMethod.Post))
-                {
-                    @Html.AntiForgeryToken()
-                    if (ViewData["Message"] != null)
+    <div class="container-fluid">
+        <h1>SCM Bulletin Board</h1>
+        <div class="row">
+            <div class="col-md-8">
+                <section id="loginForm">
+                    @using (Html.BeginForm("Login", "Login", FormMethod.Post))
                     {
-                        <p style="color:red" id="popupdiv">@ViewData["Message"]</p>
+                        @Html.AntiForgeryToken()
+                        if (ViewData["Message"] != null)
+                        {
+                            <p style="color:red" id="popupdiv">@ViewData["Message"]</p>
+                            <hr />
+                        }
+                        <h3>Log In</h3>
                         <hr />
-                    }
-                    <h3>Log In</h3>
-                    <hr />
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.email, new { @class = "col-md-2 control-label" })
-                        <div class="col-sm-5">
-                            @Html.TextBoxFor(m => m.email, new { @class = "form-control", required = "required" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.email, new { @class = "col-md-2 control-label" })
+                            <div class="col-sm-5">
+                                @Html.TextBoxFor(m => m.email, new { @class = "form-control", required = "required" })
+                            </div>
+                            <label style="color: red">*</label>
                         </div>
-                        <label style="color: red">*</label>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.password, new { @class = "col-md-2 control-label" })
-                        <div class="col-sm-5">
-                            @Html.PasswordFor(m => m.password, new { @class = "form-control", required = "required" })
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.password, new { @class = "col-md-2 control-label" })
+                            <div class="col-sm-5">
+                                @Html.PasswordFor(m => m.password, new { @class = "form-control", required = "required" })
+                            </div>
+                            <label style="color: red">*</label>
                         </div>
-                        <label style="color: red">*</label>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-sm-5">
-                            <div class="checkbox">
-                                @Html.CheckBoxFor(m => m.rememberMe)
-                                @Html.LabelFor(m => m.rememberMe)
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-sm-5">
+                                <div class="checkbox">
+                                    @Html.CheckBoxFor(m => m.rememberMe)
+                                    @Html.LabelFor(m => m.rememberMe)
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <p class="col-md-10">
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Log in" class="btn btn-primary" />
+                        <p class="col-md-10">
+                            @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                        </p>
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Log in" class="btn btn-primary" />
+                            </div>
                         </div>
-                    </div>
-                }
-            </section>
+                    }
+                </section>
+            </div>
+        </div>
+        <div class="container body-content">
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - SCM Bulletin Board</p>
+            </footer>
         </div>
     </div>
-    <div class="container body-content">
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - SCM Bulletin Board</p>
-        </footer>
-    </div>
-
+    @section scripts
+{
+        <script src="~/Resources/js/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                if ($('#popupdiv').html() != '') {
+                    $("#popupdiv").show();
+                }
+            });
+        </script>
+    }
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
 </body>
 </html>
-@section scripts
-{
-    <script src="~/Resources/js/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            if ($('#popupdiv').html() != '') {
-                $("#popupdiv").show();
-            }
-        });
-    </script>
-}
+

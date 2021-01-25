@@ -130,6 +130,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="DAOs\LoginDAO.cs" />
     <Compile Include="DAOs\UserDAO.cs" />
     <Compile Include="Models\BulletinBoardModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -156,6 +157,7 @@
       <DependentUpon>BulletinBoardModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\CommonConstant.cs" />
+    <Compile Include="Services\LoginService.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Utility\ValidationUtility.cs" />
     <Compile Include="Services\PostService.cs" />
