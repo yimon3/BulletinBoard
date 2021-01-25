@@ -133,5 +133,16 @@ namespace BulletinBoardSampleFrame.Controllers
 
             return View("PostView", postList);
         }
+
+        /// <summary>
+        /// This is post view list for visitor
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult PostViewForVisitor()
+        {
+            var postList = postServices.ShowPost();
+
+            return View("PostViewForVisitor", postList);
+        }
     }
 }

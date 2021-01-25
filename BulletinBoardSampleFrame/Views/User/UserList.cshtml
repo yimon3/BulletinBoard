@@ -2,7 +2,11 @@
 @{
     ViewBag.Title = "UserList";
 }
-
+@if (Session["Name"] != null)
+{
+    <p style="color:darkred">Welcome @Session["Name"].ToString()!</p>
+}
+<br />
 <h2>User List</h2>
 @using (Html.BeginForm())
 {

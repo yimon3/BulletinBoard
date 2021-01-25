@@ -16,13 +16,20 @@
                 <a class="navbar-brand" href="#">SCM BulletinBoard</a>
             </div>
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Users", "UserList", "User")</li>
+                @if (@Session["Type"].ToString() == "Admin")
+                {
+            <li>@Html.ActionLink("Users", "UserList", "User")</li>}
                 <li>@Html.ActionLink("User", "UserProfile", "User")</li>
-                <li>@Html.ActionLink("Posts", "PostView", "Post")</li>
+                @if (@Session["Type"].ToString() != "Visitor")
+                {
+            <li>@Html.ActionLink("Posts", "PostView", "Post")</li>}
+                @if (@Session["Type"].ToString() == "Visitor")
+                {
+            <li>@Html.ActionLink("Posts", "PostViewForVisitor", "Post")</li>}
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>@Html.ActionLink("LogInUsername", "Login", "Login")</li>
-                <li>@Html.ActionLink("LogOut", "Logout", "Logout")</li>
+                <li>@Html.ActionLink("LogOut", "LogOut", "Login")</li>
             </ul>
         </div>
     </nav>

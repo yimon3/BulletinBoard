@@ -3,6 +3,11 @@
 @{ ViewBag.Title = "View";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@if (Session["Name"] != null)
+{
+    <p style="color:darkred">Welcome @Session["Name"].ToString()!</p>
+}
+<br />
 <h3>Post List</h3>
 <br />
 @section usage{
@@ -13,7 +18,7 @@
     <script src="~/Resource/js/JavaScript.js"></script>
 }
 <div class="col-lg-12">
-    <input type="text" name="keyword"/>
+    <input type="text" name="keyword" />
     <input type="submit" class="btn btn-primary" value="Search" onclick="location.href='@Url.Action("Search", "Post", FormMethod.Post)'" />
     <input type="button" class="btn btn-primary" value="Add" onclick="location.href='@Url.Action("CreatePost", "Post")'" />
     <input type="button" class="btn btn-primary" value="Upload" onclick="location.href='@Url.Action("CreatePost", "Login")'" />
