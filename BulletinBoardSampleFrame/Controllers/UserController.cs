@@ -30,7 +30,18 @@ namespace BulletinBoardSampleFrame.Controllers
         /// <returns></returns>
         public ActionResult UserList()
         {
-            var userList = userService.getUserList();
+            var userList = userService.showUser();
+            return View("UserList", userList);
+        }
+
+        /// <summary>
+        /// This is get user list by keyword
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
+        public ActionResult Search(string name, string email)
+        {
+            var userList = userService.getUserList(name, email);
             return View("UserList", userList);
         }
 
@@ -92,9 +103,41 @@ namespace BulletinBoardSampleFrame.Controllers
         /// This is to return edit user view
         /// </summary>
         /// <returns></returns>
-        public ActionResult Edit()
+        [HttpGet]
+        public ActionResult Edit(int id, UserViewModel userView)
         {
-            return View();
+            var data = userService.EditUser(id);
+            userView.name = data.name;
+            userView.email = data.email;
+            userView.type = data.type;
+            userView.phone = data.phone;
+            userView.dob = data.dob;
+            userView.address = data.address;
+            userView.profile = data.profile;
+
+            return View("Edit", userView);
+        }
+
+        /// <summary>
+        /// This is to return edit confirm view
+        /// </summary>
+        /// <param name="userView"></param>
+        /// <returns></returns>
+        public ActionResult EditConfirm(UserViewModel userView)
+        {
+            return View("EditConfirm", userView);
+        }
+
+        /// <summary>
+        /// This is to edit user data into database
+        /// </summary>
+        /// <param name="viewModel"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ConfirmEditUser(UserViewModel viewModel)
+        {
+            userService.EditConfirmUser(viewModel);
+            return RedirectToAction("UserList", viewModel);
         }
 
         /// <summary>

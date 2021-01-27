@@ -54,7 +54,9 @@ namespace BulletinBoardSampleFrame.DAO
             var postList = (from post in db.posts
                             join user in db.users
                             on post.create_user_id equals user.id
-                            where post.title.ToUpper().Contains(search.ToUpper())
+                            where post.title.ToUpper().Contains(search.ToUpper()) ||
+                            post.description.ToUpper().Contains(search.ToUpper()) ||
+                            post.user1.name.ToUpper().Contains(search.ToUpper())
                             select new
                             {
                                 id = post.id,
@@ -92,17 +94,18 @@ namespace BulletinBoardSampleFrame.DAO
         /// This is to confirm post to database
         /// </summary>
         /// <param name="postData"></param>
-        public void confirmPost(post postData)
+        public post confirmPost(post postData)
         {
-            try
+            var exist = db.posts.Where(w => w.title == postData.title && w.description == postData.description).FirstOrDefault();
+            if (exist != null)
+            {
+            }
+            else
             {
                 db.posts.Add(postData);
                 db.SaveChanges();
             }
-            catch (DbEntityValidationException e)
-            {
-                Console.WriteLine(e);
-            }
+            return exist;
         }
 
         /// <summary>

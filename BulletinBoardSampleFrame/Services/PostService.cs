@@ -25,9 +25,9 @@ namespace BulletinBoardSampleFrame.Services
         /// This is to confirm post
         /// </summary>
         /// <param name="postData"></param>
-        public void ConfirmPost(post postData)
+        public post ConfirmPost(post postData)
         {
-            postDAO.confirmPost(postData);
+            return postDAO.confirmPost(postData);
         }
 
         /// <summary>

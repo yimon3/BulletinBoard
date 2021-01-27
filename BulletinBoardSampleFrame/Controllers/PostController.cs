@@ -1,4 +1,5 @@
 ﻿using BulletinBoardSampleFrame.Models;
+using BulletinBoardSampleFrame.Properties;
 using BulletinBoardSampleFrame.Services;
 using BulletinBoardSampleFrame.ViewModel.Post;
 using System;
@@ -96,17 +97,20 @@ namespace BulletinBoardSampleFrame.Controllers
         /// <param name="postData"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Save(PostViewModel postData)
+        public ActionResult Save(PostViewModel postData, post newpost)
         {
-            post newpost = new post();
-            newpost.title = postData.title;
-            newpost.description = postData.description;
-            newpost.create_user_id = 1;
-            newpost.updated_user_id = 1;
+            newpost.create_user_id = (int)Session["Id"];
+            newpost.updated_user_id = (int)Session["Id"];
             newpost.created_at = DateTime.Now;
             newpost.updated_at = DateTime.Now;
-            postServices.ConfirmPost(newpost);
+            newpost.status = CommonConstant.stauts_active;
 
+            var exist = postServices.ConfirmPost(newpost);
+            if (exist != null)
+            {
+                ViewData["Message"] = "Duplicate Data are not inserted.";
+                return View("CreatePost", postData);
+            }
             return RedirectToAction("PostView", postData);
         }
 
@@ -127,9 +131,9 @@ namespace BulletinBoardSampleFrame.Controllers
         /// </summary>
         /// <param name="search"></param>
         /// <returns></returns>
-        public ActionResult Search(string search)
+        public ActionResult Search(string searchString)
         {
-            var postList = postServices.ShowPostByKeyword(search);
+            var postList = postServices.ShowPostByKeyword(searchString);
 
             return View("PostView", postList);
         }

@@ -16,9 +16,19 @@ namespace BulletinBoardSampleFrame.Services
         /// This is to get user list
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<UserViewModel> getUserList()
+        public IEnumerable<UserViewModel> showUser()
         {
-            var userList = userDAO.getUserList();
+            var user = userDAO.getUser();
+            return user;
+        }
+
+        /// <summary>
+        /// This is to get user list by keyword
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<UserViewModel> getUserList(string search, string name)
+        {
+            var userList = userDAO.getUserList(search, name);
             return userList;
         }
 
@@ -29,6 +39,25 @@ namespace BulletinBoardSampleFrame.Services
         public void SaveUser(user userData)
         {
             userDAO.SaveUser(userData);
+        }
+
+        /// <summary>
+        /// This is to edit user for return
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public user EditUser(int id)
+        {
+            return userDAO.EditUser(id);
+        }
+
+        /// <summary>
+        /// This is to edit user data into database
+        /// </summary>
+        /// <param name="userView"></param>
+        public void EditConfirmUser(UserViewModel userView)
+        {
+            userDAO.EditConfirmUser(userView);
         }
 
         /// <summary>
