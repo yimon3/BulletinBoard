@@ -54,14 +54,16 @@ namespace BulletinBoardSampleFrame.DAO
         /// <returns></returns>
         public IEnumerable<UserViewModel> getUsersByKeyword(string name, string email)
         {
-            var userList = (from user in db.users
+            var userList = (from user in db.users 
+                            join post in db.posts
+                            on user.id equals post.create_user_id
                             where user.name.ToUpper().Contains(name.ToUpper()) ||
                             user.email.ToUpper().Contains(email.ToUpper())
                             select new
                             {
                                 name = user.name,
                                 email = user.email,
-                                createdUser = user.name,
+                                createdUser = post.user1.name,
                                 phone = user.phone,
                                 birthday = user.dob,
                                 address = user.address,
@@ -104,10 +106,18 @@ namespace BulletinBoardSampleFrame.DAO
         /// This is to save new user to database
         /// </summary>
         /// <param name="newUser"></param>
-        public void SaveUser(user newUser)
+        public user SaveUser(user newUser)
         {
-            db.users.Add(newUser);
-            db.SaveChanges();
+            var exist = db.users.Where(w => w.email == newUser.email).FirstOrDefault();
+            if (exist != null)
+            {
+            }
+            else
+            {
+                db.users.Add(newUser);
+                db.SaveChanges();
+            }
+            return exist;
         }
 
         /// <summary>

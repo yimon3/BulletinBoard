@@ -67,6 +67,7 @@ namespace BulletinBoardSampleFrame.Controllers
             user newUser = new user();
             newUser.name = userData.name;
             newUser.email = userData.email;
+            userData.createdUser = (string)Session["Name"];
             newUser.password = userData.password;
             if (userData.type == "admin")
             {
@@ -84,6 +85,18 @@ namespace BulletinBoardSampleFrame.Controllers
             newUser.dob = userData.dob;
             newUser.address = userData.address;
             newUser.profile = userData.profile;
+            newUser.create_user_id = (int)Session["Id"];
+            newUser.updated_user_id = (int)Session["Id"];
+            newUser.created_at = DateTime.Now;
+            newUser.updated_at = DateTime.Now;
+
+            var exist = userService.SaveUser(newUser);
+            if (exist != null)
+            {
+                ViewData["Message"] = "User with email already exist.";
+                return View("User", userData);
+            }
+
             userService.SaveUser(newUser);
 
             return RedirectToAction("UserList",userData);

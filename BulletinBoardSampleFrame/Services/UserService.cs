@@ -33,12 +33,13 @@ namespace BulletinBoardSampleFrame.Services
         }
 
         /// <summary>
-        /// This is to save user to database
+        /// This is to add new user to database
         /// </summary>
         /// <param name="userData"></param>
-        public void SaveUser(user userData)
+        /// <returns></returns>
+        public user SaveUser(user userData)
         {
-            userDAO.SaveUser(userData);
+            return userDAO.SaveUser(userData);
         }
 
         /// <summary>
