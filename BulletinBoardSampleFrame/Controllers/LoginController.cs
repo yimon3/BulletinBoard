@@ -110,14 +110,14 @@ namespace BulletinBoardSampleFrame.Controllers
             var data = loginService.ChangePassword(login);
             if (data != null)
             {
-                if (Session["Type"].ToString() == "Visitor")
-                {
-                    return RedirectToAction("PostViewForVisitor", "Post");
-                }
-                else if (login.newPassword != login.confirmPassword)
+                if (login.newPassword != login.confirmPassword)
                 {
                     ViewData["Message"] = "New Password and Confirm password must same.";
                     return View(login);
+                }
+                else if (Session["Type"].ToString() == "Visitor")
+                {
+                    return RedirectToAction("PostViewForVisitor", "Post");
                 }
             }
             else
