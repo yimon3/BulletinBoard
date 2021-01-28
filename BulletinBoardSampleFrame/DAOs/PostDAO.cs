@@ -152,11 +152,31 @@ namespace BulletinBoardSampleFrame.DAO
 
                         select item).SingleOrDefault();
 
-            data.deleted_at = DateTime.Now;
-            data.deleted_user_id = data.create_user_id;
 
             db.posts.Remove(data);
             db.SaveChanges();
+        }
+
+        /// <summary>
+        /// This is upload csv into database
+        /// </summary>
+        /// <param name="postData"></param>
+        public void UploadCSV(post postData)
+        {
+            db.posts.Add(postData);
+            db.SaveChanges();
+        }
+
+        /// <summary>
+        /// This is download CSV
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<post> DownloadCSV()
+        {
+            var postData = from post in db.posts.Take(10)
+                           select post;
+
+            return postData;
         }
     }
 }

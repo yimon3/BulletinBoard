@@ -2,6 +2,7 @@
 using BulletinBoardSampleFrame.Models;
 using BulletinBoardSampleFrame.ViewModel.Post;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BulletinBoardSampleFrame.Services
 {
@@ -67,6 +68,24 @@ namespace BulletinBoardSampleFrame.Services
         public void DeletePost(int postId)
         {
             postDAO.DeletePost(postId);
+        }
+
+        /// <summary>
+        /// This is upload csv data
+        /// </summary>
+        /// <param name="postData"></param>
+        public void UploadCSV(post postData)
+        {
+            postDAO.UploadCSV(postData);
+        }
+
+        /// <summary>
+        /// This is download csv file
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<post> DownloadCSV()
+        {
+            return postDAO.DownloadCSV();
         }
     }
 }

@@ -3,10 +3,13 @@ using BulletinBoardSampleFrame.Properties;
 using BulletinBoardSampleFrame.Services;
 using BulletinBoardSampleFrame.ViewModel.Post;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace BulletinBoardSampleFrame.Controllers
@@ -119,7 +122,6 @@ namespace BulletinBoardSampleFrame.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost]
         public ActionResult Delete(int id)
         {
             postServices.DeletePost(id);
@@ -148,5 +150,116 @@ namespace BulletinBoardSampleFrame.Controllers
 
             return View("PostViewForVisitor", postList);
         }
-    }
+
+        /// <summary>
+        /// This is to upload csv file
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult UploadCSV()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// This is upload csv file into database
+        /// </summary>
+        /// <param name="postedFile"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult UploadCSV(HttpPostedFileBase postedFile)
+        {
+            List<PostViewModel> postData = new List<PostViewModel>();
+            string filePath = string.Empty;
+            if (postedFile != null && postedFile.ContentLength > 0)
+            {
+                if (postedFile.FileName.EndsWith(".csv"))
+                {
+
+                    string path = Server.MapPath("~/Uploads/@Session['Id']/csv/");
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+
+                    filePath = path + Path.GetFileName(postedFile.FileName);
+                    string extension = Path.GetExtension(postedFile.FileName);
+                    postedFile.SaveAs(filePath);
+
+                    //Read the contents of CSV file.
+                    string csvData = System.IO.File.ReadAllText(filePath);
+
+                    //Execute a loop over the rows.
+                    foreach (string row in csvData.Split('\n'))
+                    {
+                        if (!string.IsNullOrEmpty(row))
+                        {
+                            postData.Add(new PostViewModel
+                            {
+                                title = row.Split(',')[0],
+                                description = row.Split(',')[1],
+                                created_at = Convert.ToDateTime(row.Split(',')[2])
+                            });
+                        }
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("File", "This file format is not supported");
+                    return View();
+                }
+                foreach (var posts in postData)
+                {
+                    var newPost = new post();
+                    newPost.title = posts.title;
+                    newPost.description = posts.description;
+                    newPost.status = CommonConstant.stauts_active;
+                    newPost.create_user_id = (int)Session["Id"];
+                    newPost.updated_user_id = (int)Session["Id"];
+                    newPost.created_at = posts.created_at;
+                    newPost.updated_at = DateTime.Now;
+
+                    postServices.UploadCSV(newPost);
+                }
+            }
+            return RedirectToAction("PostView", "Post");
+        }
+
+        /// <summary>
+        /// Download Csv file
+        /// </summary>
+        /// <returns></returns>
+        public FileResult DownloadCSV()
+        {
+            string[] columnNames = new string[] { "Id", "Title", "Description", "Posted User", "Status", "Created User Id", "Updated User Id", "Deleted User Id", "Created At", "Update At", "Deleted At" };
+            var data = postServices.DownloadCSV();
+            string csv = string.Empty;
+
+            foreach (string columnName in columnNames)
+            {
+                csv += columnName + ',';
+            }
+
+            csv += "\r\n";
+
+            foreach (var post in data)
+            {
+                csv += post.id.ToString().Replace(",", ";") + ',';
+                csv += post.title.Replace(",", ";") + ',';
+                csv += post.description.Replace(",", ";") + ',';
+                csv += post.user.name.Replace(",", ";") + ',';
+                csv += post.status.ToString().Replace(",", ";") + ',';
+                csv += post.create_user_id.ToString().Replace(",", ";") + ',';
+                csv += post.updated_user_id.ToString().Replace(",", ";") + ',';
+                csv += post.deleted_user_id.ToString().Replace(",", ";") + ',';
+                csv += post.created_at.ToString().Replace(",", ";") + ',';
+                csv += post.updated_at.ToString().Replace(",", ";") + ',';
+                csv += post.deleted_at.ToString().Replace(",", ";") + ',';
+                csv += "\r\n";
+            }
+
+            byte[] bytes = Encoding.ASCII.GetBytes(csv);
+            return File(bytes, "application/text", "PostData.csv");
+        }
+    
+}
 }
