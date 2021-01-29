@@ -30,7 +30,7 @@ namespace BulletinBoardSampleFrame.Controllers
         /// <returns></returns>
         public ActionResult UserList()
         {
-            var userList = userService.showUser();
+            var userList = userService.ShowUser();
             return View("UserList", userList);
         }
 
@@ -41,7 +41,7 @@ namespace BulletinBoardSampleFrame.Controllers
         /// <returns></returns>
         public ActionResult Search(string name, string email)
         {
-            var userList = userService.getUserList(name, email);
+            var userList = userService.GetUserList(name, email);
             return View("UserList", userList);
         }
 

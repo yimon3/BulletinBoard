@@ -41,9 +41,9 @@ namespace BulletinBoardSampleFrame.Controllers
         /// <param name="postView"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult EditPost(int id, PostViewModel postView)
+        public ActionResult Edit(int id, PostViewModel postView)
         {
-            postServices.EditPost(id, postView);
+            postServices.Edit(id, postView);
 
             return View("EditPost", postView);
         }
@@ -65,9 +65,9 @@ namespace BulletinBoardSampleFrame.Controllers
         /// <param name="pVM"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult EditPost(PostViewModel pVM)
+        public ActionResult EditPost(int id, PostViewModel pVM)
         {
-            postServices.EditPost(pVM);
+            postServices.EditPost(id, pVM);
             return RedirectToAction("PostView");
         }
 

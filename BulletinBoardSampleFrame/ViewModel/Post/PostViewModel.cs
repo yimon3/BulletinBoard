@@ -30,7 +30,7 @@ namespace BulletinBoardSampleFrame.ViewModel.Post
 
         //Post Status (Public or Private)
         [Display(Name ="Status")]
-        public int status { get; set; }
+        public bool status { get; set; }
 
         //Created Usernmae
         public string name { get; set; }

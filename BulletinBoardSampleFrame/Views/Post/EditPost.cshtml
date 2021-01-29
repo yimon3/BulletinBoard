@@ -28,14 +28,13 @@
                     @Html.TextBoxFor(m => m.description, new { @class = "form-control", required = "required" })
                 </div>
                 <label style="color: red">*</label>
-            </div><br /><br />
+            </div><br />
             <div class="form-group">
                 <div class="col-sm-2">
                     @Html.LabelFor(m => m.status)
                 </div>
                 <div class="col-sm-3">
-                    @Html.HiddenFor(m => m.status)
-                    <input type="checkbox" id="status" />
+                    @Html.CheckBoxFor(m => m.status)
                 </div>
             </div>
             <br /><br />
@@ -46,7 +45,7 @@
                     <input type="button" id="btnClear" value="Clear" />
                 </div>
             </div>
-            </div>
+        </div>
     </form>
 }
 

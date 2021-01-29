@@ -27,7 +27,7 @@ namespace BulletinBoardSampleFrame.Services
         /// <param name="postData"></param>
         public post ConfirmPost(post postData)
         {
-            return postDAO.confirmPost(postData);
+            return postDAO.ConfirmPost(postData);
         }
 
         /// <summary>
@@ -35,18 +35,18 @@ namespace BulletinBoardSampleFrame.Services
         /// </summary>
         /// <param name="id"></param>
         /// <param name="postView"></param>
-        public void EditPost(int id, PostViewModel postView)
+        public void Edit(int id, PostViewModel postView)
         {
-            postDAO.EditPost(id, postView);
+            postDAO.Edit(id, postView);
         }
 
         /// <summary>
         /// This is to edit post to database
         /// </summary>
         /// <param name="postData"></param>
-        public void EditPost(PostViewModel postData)
+        public void EditPost(int id, PostViewModel postData)
         {
-            postDAO.EditPost(postData);
+            postDAO.EditPost(id, postData);
         }
 
         /// <summary>

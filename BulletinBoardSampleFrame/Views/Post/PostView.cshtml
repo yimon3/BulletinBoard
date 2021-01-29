@@ -63,7 +63,7 @@
                     @Html.DisplayFor(modelItem => item.created_at)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "EditPost", new { @id = item.id }, new { @class = "btn btn-success" }) |
+                    @Html.ActionLink("Edit", "Edit", new { @id = item.id }, new { @class = "btn btn-success" }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { onclick = "return confirm('Are sure wants to delete?');" })
                 </td>
             </tr>

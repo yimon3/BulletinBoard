@@ -16,9 +16,9 @@ namespace BulletinBoardSampleFrame.Services
         /// This is to get user list
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<UserViewModel> showUser()
+        public IEnumerable<UserViewModel> ShowUser()
         {
-            var user = userDAO.getUser();
+            var user = userDAO.GetUser();
             return user;
         }
 
@@ -26,9 +26,9 @@ namespace BulletinBoardSampleFrame.Services
         /// This is to get user list by keyword
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<UserViewModel> getUserList(string search, string name)
+        public IEnumerable<UserViewModel> GetUserList(string search, string name)
         {
-            var userList = userDAO.getUserList(search, name);
+            var userList = userDAO.GetUserList(search, name);
             return userList;
         }
 

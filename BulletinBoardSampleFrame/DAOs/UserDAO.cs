@@ -15,7 +15,7 @@ namespace BulletinBoardSampleFrame.DAO
         /// This is to get user list
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<UserViewModel> getUser()
+        public IEnumerable<UserViewModel> GetUser()
         {
             var userList = (from user in db.users
                             select new
@@ -52,7 +52,7 @@ namespace BulletinBoardSampleFrame.DAO
         /// </summary>
         /// <param name="search"></param>
         /// <returns></returns>
-        public IEnumerable<UserViewModel> getUsersByKeyword(string name, string email)
+        public IEnumerable<UserViewModel> GetUsersByKeyword(string name, string email)
         {
             var userList = (from user in db.users 
                             join post in db.posts
@@ -89,17 +89,17 @@ namespace BulletinBoardSampleFrame.DAO
         /// </summary>
         /// <param name="search"></param>
         /// <returns></returns>
-        public IEnumerable<UserViewModel> getUserList(string name, string email)
+        public IEnumerable<UserViewModel> GetUserList(string name, string email)
         {
             if (name == null || name.Equals(""))
             {
-                return getUser();
+                return GetUser();
             }
             if (email == null || email.Equals(""))
             {
-                return getUser();
+                return GetUser();
             }
-            return getUsersByKeyword(name, email);
+            return GetUsersByKeyword(name, email);
         }
 
         /// <summary>

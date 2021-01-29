@@ -5,7 +5,7 @@
 
 <h2>Update Post Confirmation</h2>
 <br />
-@using (Html.BeginForm("EditPost","Post"))
+@using (Html.BeginForm("EditPost","Post", new { id = Model.id }))
 {
     <div class="form-group">
         <div class="col-sm-3">

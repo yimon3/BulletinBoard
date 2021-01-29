@@ -39,7 +39,6 @@ namespace BulletinBoardSampleFrame.DAO
                               id = postView.id,
                               title = postView.title,
                               description = postView.description,
-                              status = postView.status,
                               name = postView.name,
                               created_at = postView.created_at
                           });
@@ -71,7 +70,6 @@ namespace BulletinBoardSampleFrame.DAO
                               id = postView.id,
                               title = postView.title,
                               description = postView.description,
-                              status = postView.status,
                               name = postView.name,
                               created_at = postView.created_at
                           });
@@ -94,7 +92,7 @@ namespace BulletinBoardSampleFrame.DAO
         /// This is to confirm post to database
         /// </summary>
         /// <param name="postData"></param>
-        public post confirmPost(post postData)
+        public post ConfirmPost(post postData)
         {
             var exist = db.posts.Where(w => w.title == postData.title && w.description == postData.description).FirstOrDefault();
             if (exist != null)
@@ -114,11 +112,19 @@ namespace BulletinBoardSampleFrame.DAO
         /// <param name="id"></param>
         /// <param name="postData"></param>
         /// <returns></returns>
-        public PostViewModel EditPost(int id, PostViewModel postData)
+        public PostViewModel Edit(int id, PostViewModel postData)
         {
             var data = db.posts.Where(p => p.id == id).FirstOrDefault();
             postData.title = data.title;
             postData.description = data.description;
+            if (data.status == 1)
+            {
+                postData.status = true;
+            }
+            else
+            {
+                postData.status = false;
+            }
             return postData;
         }
 
@@ -126,15 +132,21 @@ namespace BulletinBoardSampleFrame.DAO
         /// This is for edit post
         /// </summary>
         /// <param name="postData"></param>
-        public void EditPost(PostViewModel postData)
+        public void EditPost(int id, PostViewModel postData)
         {
-            var data = db.posts.Where(x => x.id == postData.id).FirstOrDefault();
+            var data = db.posts.Where(x => x.id == id).FirstOrDefault();
             if (data != null)
             {
                 data.title = postData.title;
                 data.description = postData.description;
-                data.status = postData.status;
-                data.created_at = DateTime.Now;
+                if (postData.status)
+                {
+                    data.status = 1;
+                }
+                else
+                {
+                    data.status = 0;
+                }
                 data.updated_at = DateTime.Now;
                 db.SaveChanges();
             }
@@ -151,9 +163,6 @@ namespace BulletinBoardSampleFrame.DAO
                         where item.id == postId
 
                         select item).SingleOrDefault();
-
-            data.deleted_at = DateTime.Now;
-            data.deleted_user_id = data.create_user_id;
 
             db.posts.Remove(data);
             db.SaveChanges();
