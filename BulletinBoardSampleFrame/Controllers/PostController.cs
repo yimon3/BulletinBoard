@@ -67,6 +67,8 @@ namespace BulletinBoardSampleFrame.Controllers
         [HttpPost]
         public ActionResult EditPost(int id, PostViewModel pVM)
         {
+            pVM.UpdatedUserId = (int)Session["Id"];
+
             postServices.EditPost(id, pVM);
             return RedirectToAction("PostView");
         }

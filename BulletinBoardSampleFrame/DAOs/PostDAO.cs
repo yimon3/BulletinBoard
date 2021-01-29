@@ -31,7 +31,7 @@ namespace BulletinBoardSampleFrame.DAO
                                 title = post.title,
                                 description = post.description,
                                 status = post.status,
-                                name = user.name,
+                                CreatedName = user.name,
                                 created_at = post.created_at
                             }).ToList()
                           .Select(postView => new PostViewModel()
@@ -39,7 +39,7 @@ namespace BulletinBoardSampleFrame.DAO
                               id = postView.id,
                               title = postView.title,
                               description = postView.description,
-                              name = postView.name,
+                              CreatedName = postView.CreatedName,
                               created_at = postView.created_at
                           });
             return postList;
@@ -62,7 +62,7 @@ namespace BulletinBoardSampleFrame.DAO
                                 title = post.title,
                                 description = post.description,
                                 status = post.status,
-                                name = user.name,
+                                CreatedName = user.name,
                                 created_at = post.created_at
                             }).ToList()
                           .Select(postView => new PostViewModel()
@@ -70,7 +70,7 @@ namespace BulletinBoardSampleFrame.DAO
                               id = postView.id,
                               title = postView.title,
                               description = postView.description,
-                              name = postView.name,
+                              CreatedName = postView.CreatedName,
                               created_at = postView.created_at
                           });
             return postList;
@@ -147,6 +147,7 @@ namespace BulletinBoardSampleFrame.DAO
                 {
                     data.status = 0;
                 }
+                data.updated_user_id = postData.UpdatedUserId;
                 data.updated_at = DateTime.Now;
                 db.SaveChanges();
             }

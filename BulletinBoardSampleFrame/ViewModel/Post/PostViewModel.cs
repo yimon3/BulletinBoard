@@ -33,9 +33,12 @@ namespace BulletinBoardSampleFrame.ViewModel.Post
         public bool status { get; set; }
 
         //Created Usernmae
-        public string name { get; set; }
+        public string CreatedName { get; set; }
 
         //Created Time
         public System.DateTime created_at { get; set; } = DateTime.Now;
+       
+        //Updated user id
+        public int UpdatedUserId { get; set; }
     }
 }
