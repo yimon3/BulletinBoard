@@ -1,0 +1,69 @@
+@model PagedList.IPagedList<BulletinBoardSampleFrame.ViewModel.Post.PostViewModel>
+@using PagedList.Mvc;
+
+@{ ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (Session["Name"] != null)
+{
+    <p style="color:darkred">Welcome @Session["Name"].ToString()!</p>
+}
+<h3>Post List</h3>
+<br />
+<br />
+@section usage{
+    <link href="~/Resource/css/table.css" rel="stylesheet" />
+}
+@section script
+{
+    <script src="~/Resource/js/JavaScript.js"></script>
+}
+@using (Html.BeginForm())
+{
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Post Title
+        </th>
+        <th>
+            Post Description
+        </th>
+        <th>
+            Posted User
+        </th>
+        <th>
+            Posted Date
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedUser)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created_at)
+            </td>
+        </tr>
+    }
+</table>
+
+<div id="container" style="margin-left: 20px">
+    <p></p>
+    <p></p>
+    <div class="pagination" style="margin-left: 400px">
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+        of @Model.PageCount   @Html.PagedListPager(Model, page => Url.Action("PostViewDefault", new { page }))
+    </div>
+</div>
+}
+

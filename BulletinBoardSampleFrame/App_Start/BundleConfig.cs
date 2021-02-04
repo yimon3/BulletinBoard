@@ -1,4 +1,3 @@
-﻿using System.Web;
 using System.Web.Optimization;
 
 namespace BulletinBoardSampleFrame
@@ -9,22 +8,22 @@ namespace BulletinBoardSampleFrame
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Resources/script/jquery-{version}.js"));
+                        "~/Resources/lib/script/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Resources/script/jquery.validate*"));
+                        "~/Resources/lib/script/jquery.validate*"));
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Resources/script/modernizr-*"));
+                        "~/Resources/lib/script/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Resources/script/bootstrap.js"));
+                      "~/Resources/lib/script/bootstrap.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Resources/content/bootstrap.css",
-                      "~/Resources/content/Content/site.css"));
+                      "~/Resources/lib/content/bootstrap.css",
+                      "~/Resources/lib/content/Content/site.css"));
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model BulletinBoardSampleFrame.ViewModel.User.UserViewModel
+@model BulletinBoardSampleFrame.ViewModel.User.UserViewModel
 @{
     ViewBag.Title = "UserProfile";
 }
@@ -7,62 +7,63 @@
     <p style="color:darkred">Welcome @Session["Name"].ToString()!</p>
 }
 <br />
-<p style="text-align:center">
-    <input type="button" class="btn btn-success" value="Edit" onclick="location.href='@Url.Action("Edit", "User", new { Model.id } )'" />
-</p>
+
 @using (Html.BeginForm())
 {
+    <p style="text-align:center">
+        <input type="button" class="btn btn-success" value="Edit" onclick="location.href='@Url.Action("Edit", "User", new { id = @Session["Id"] } )'" />
+    </p>
     <h2>User Profile</h2>
     <br />
     <br />
 
     <div class="form-group">
         <div class="col-sm-3">
-            @Html.LabelFor(m => m.name)
+            @Html.LabelFor(m => m.Name)
         </div>
         @Session["Name"].ToString()
-        @Html.HiddenFor(m => m.name)
+        @Html.HiddenFor(m => m.Name)
     </div>
     <div class="form-group">
         <div class="col-sm-3">
         </div>
-        @Session["Profile"].ToString()
-        @Html.HiddenFor(m => m.profile)
+        <img src="~/Resources/lib/images/@Session["Profile"]" width="100" height="100" />
+        @Html.HiddenFor(m => m.Profile)
     </div>
     <div class="form-group">
         <div class="col-sm-3">
-            @Html.LabelFor(m => m.email)
+            @Html.LabelFor(m => m.Email)
         </div>
         @Session["Email"].ToString()
-        @Html.HiddenFor(m => m.email)
+        @Html.HiddenFor(m => m.Email)
     </div>
     <div class="form-group">
         <div class="col-sm-3">
-            @Html.LabelFor(m => m.type)
+            @Html.LabelFor(m => m.Type)
         </div>
         @Session["Type"].ToString()
-        @Html.HiddenFor(m => m.type)
+        @Html.HiddenFor(m => m.Type)
     </div>
     <div class="form-group">
         <div class="col-sm-3">
-            @Html.LabelFor(m => m.phone)
+            @Html.LabelFor(m => m.Phone)
         </div>
         @Session["Phone"].ToString()
-        @Html.HiddenFor(m => m.phone)
+        @Html.HiddenFor(m => m.Phone)
     </div>
     <div class="form-group">
         <div class="col-sm-3">
-            @Html.LabelFor(m => m.dob)
+            @Html.LabelFor(m => m.Dob)
         </div>
         @Session["DOB"].ToString()
-        @Html.HiddenFor(m => m.dob)
+        @Html.HiddenFor(m => m.Dob)
     </div>
     <div class="form-group">
         <div class="col-sm-3">
-            @Html.LabelFor(m => m.address)
+            @Html.LabelFor(m => m.Address)
         </div>
         @Session["Address"].ToString()
-        @Html.HiddenFor(m => m.address)
+        @Html.HiddenFor(m => m.Address)
     </div>
     <br />
 }

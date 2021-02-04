@@ -1,9 +1,15 @@
-﻿using BulletinBoardSampleFrame.Models;
 using BulletinBoardSampleFrame.Services;
+using BulletinBoardSampleFrame.Properties;
 using BulletinBoardSampleFrame.ViewModel.Login;
-using System.Linq;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
+using System;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Security;
+using WebMatrix.WebData;
 
 namespace BulletinBoardSampleFrame.Controllers
 {
@@ -35,13 +41,11 @@ namespace BulletinBoardSampleFrame.Controllers
         [HttpPost]
         public ActionResult Login(LoginModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
             var obj = loginService.Login(model);
+            
             if (obj != null)
             {
+                FormsAuthentication.SetAuthCookie(model.Email,model.RememberMe);
                 Session["Id"] = obj.id;
                 Session["Name"] = obj.name.ToString();
                 Session["Email"] = obj.email.ToString();
@@ -64,19 +68,11 @@ namespace BulletinBoardSampleFrame.Controllers
                 Session["Profile"] = obj.profile.ToString();
             }
             else
-            {
+            { 
                 ViewData["Message"] = "Email or Password is incorrect";
-                return View(obj);
+                return View(model);
             }
-            if (Session["Type"].ToString() == "Admin" || Session["Type"].ToString() == "User")
-            {
-                return RedirectToAction("PostView", "Post");
-            }
-            if (Session["Type"].ToString() == "Visitor")
-            {
-                return RedirectToAction("PostViewForVisitor", "Post");
-            }
-            return View(obj);
+            return RedirectToAction("PostViewDefault", "Post");
         }
 
         /// <summary>
@@ -87,6 +83,15 @@ namespace BulletinBoardSampleFrame.Controllers
         {
             Session.RemoveAll();
             return RedirectToAction("Login");
+        }
+
+        public ActionResult ClearInput()
+        {
+            if (ModelState.IsValid)
+            {
+                ModelState.Clear();
+            }
+            return View("ChangePassword");
         }
 
         /// <summary>
@@ -110,7 +115,7 @@ namespace BulletinBoardSampleFrame.Controllers
             var data = loginService.ChangePassword(login);
             if (data != null)
             {
-                if (login.newPassword != login.confirmPassword)
+                if (login.NewPassword != login.ConfirmPassword)
                 {
                     ViewData["Message"] = "New Password and Confirm password must same.";
                     return View(login);

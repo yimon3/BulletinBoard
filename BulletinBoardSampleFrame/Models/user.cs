@@ -11,9 +11,7 @@ namespace BulletinBoardSampleFrame.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
+    
     public partial class user
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,9 +20,7 @@ namespace BulletinBoardSampleFrame.Models
             this.posts = new HashSet<post>();
             this.posts1 = new HashSet<post>();
         }
-
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    
         public int id { get; set; }
         public string name { get; set; }
         public string email { get; set; }

@@ -1,36 +1,73 @@
-﻿using BulletinBoardSampleFrame.Models;
+using BulletinBoardSampleFrame.Models;
 using BulletinBoardSampleFrame.Services;
 using BulletinBoardSampleFrame.ViewModel.User;
+using PagedList;
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace BulletinBoardSampleFrame.Controllers
 {
+    /// <summary>
+    /// This is user controller
+    /// </summary>
     public class UserController : Controller
     {
+        #region Variables
         UserService userService = new UserService();
+        #endregion
 
+        #region public Action method
         // GET: User
         public ActionResult Index()
         {
             return View();
         }
 
+        // Get : User
         public new ActionResult User()
         {
             return View();
         }
 
         /// <summary>
+        /// This is clear input values
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ClearInput()
+        {
+            if (ModelState.IsValid)
+            {
+                ModelState.Clear();
+            }
+            return View("User");
+        }
+
+        /// <summary>
+        /// This is clear edit input value
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ClearEditInput()
+        {
+            if (ModelState.IsValid)
+            {
+                ModelState.Clear();
+            }
+            return View("Edit");
+        }
+
+        /// <summary>
         /// This is to get user list
         /// </summary>
         /// <returns></returns>
-        public ActionResult UserList()
+        public ActionResult UserList(int? page)
         {
-            var userList = userService.ShowUser();
+            int pageSize = 5;
+            int pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+
+            var userList = userService.showUser().ToPagedList(pageIndex, pageSize);
             return View("UserList", userList);
         }
 
@@ -39,9 +76,12 @@ namespace BulletinBoardSampleFrame.Controllers
         /// </summary>
         /// <param name="search"></param>
         /// <returns></returns>
-        public ActionResult Search(string name, string email)
+        public ActionResult Search(int? page,string name, string email, DateTime? createdTo, DateTime? createdFrom)
         {
-            var userList = userService.GetUserList(name, email);
+            int pageSize = 5;
+            int pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
+
+            var userList = userService.getUserList(name, email, createdTo, createdFrom).ToPagedList(pageIndex, pageSize);
             return View("UserList", userList);
         }
 
@@ -51,8 +91,16 @@ namespace BulletinBoardSampleFrame.Controllers
         /// <param name="userViewModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult ConfirmUser(UserViewModel userViewModel)
+        public ActionResult ConfirmUser(UserViewModel userViewModel, HttpPostedFileBase file)
         {
+            file = Request.Files[0];
+            if (file != null && file.ContentLength > 0)
+            {
+                var imageName = Path.GetFileName(file.FileName); 
+                string physicalPath = Server.MapPath("~/Resources/lib/images/" + imageName);
+                file.SaveAs(physicalPath);
+                userViewModel.Profile = imageName;
+            }
             return View("ConfirmUser", userViewModel);
         }
 
@@ -65,15 +113,19 @@ namespace BulletinBoardSampleFrame.Controllers
         public ActionResult Save(UserViewModel userData)
         {
             user newUser = new user();
-            newUser.name = userData.name;
-            newUser.email = userData.email;
-            userData.createdUser = (string)Session["Name"];
-            newUser.password = userData.password;
-            if (userData.type == "admin")
+            
+            newUser.name = userData.Name;
+            newUser.email = userData.Email;
+            newUser.password = userData.Password;
+            newUser.profile = userData.Profile;
+            //Password Decrypt
+            //userData.Password = endePassword.Decrypt(newUser.password);
+
+            if (userData.Type == "admin")
             {
                 newUser.type = "0";
             }
-            else if(userData.type == "user")
+            else if (userData.Type == "user")
             {
                 newUser.type = "1";
             }
@@ -81,12 +133,12 @@ namespace BulletinBoardSampleFrame.Controllers
             {
                 newUser.type = "2";
             }
-            newUser.phone = userData.phone;
-            newUser.dob = userData.dob;
-            newUser.address = userData.address;
-            newUser.profile = userData.profile;
+            newUser.phone = userData.Phone;
+            newUser.dob = userData.Dob;
+            newUser.address = userData.Address;
             newUser.create_user_id = (int)Session["Id"];
             newUser.updated_user_id = (int)Session["Id"];
+            userData.CreatedUser = (string)Session["Name"];
             newUser.created_at = DateTime.Now;
             newUser.updated_at = DateTime.Now;
 
@@ -97,9 +149,7 @@ namespace BulletinBoardSampleFrame.Controllers
                 return View("User", userData);
             }
 
-            userService.SaveUser(newUser);
-
-            return RedirectToAction("UserList",userData);
+            return RedirectToAction("UserList", userData);
         }
 
         /// <summary>
@@ -120,19 +170,19 @@ namespace BulletinBoardSampleFrame.Controllers
         public ActionResult Edit(int id, UserViewModel userView)
         {
             var data = userService.EditUser(id);
-            userView.name = data.name;
-            userView.email = data.email;
-            userView.type = data.type;
-            userView.phone = data.phone;
-            userView.dob = data.dob;
-            userView.address = data.address;
-            userView.profile = data.profile;
+            userView.Name = data.name;
+            userView.Email = data.email;
+            userView.Type = data.type;
+            userView.Phone = data.phone;
+            userView.Dob = data.dob;
+            userView.Address = data.address;
+            userView.Profile = data.profile;
 
             return View("Edit", userView);
         }
 
         /// <summary>
-        /// This is to return edit confirm view
+        /// This is edit confirm for user
         /// </summary>
         /// <param name="userView"></param>
         /// <returns></returns>
@@ -142,7 +192,7 @@ namespace BulletinBoardSampleFrame.Controllers
         }
 
         /// <summary>
-        /// This is to edit user data into database
+        /// This is for confirm edit user into database
         /// </summary>
         /// <param name="viewModel"></param>
         /// <returns></returns>
@@ -163,5 +213,6 @@ namespace BulletinBoardSampleFrame.Controllers
             userService.DeleteUser(id);
             return RedirectToAction("UserList");
         }
+        #endregion
     }
 }

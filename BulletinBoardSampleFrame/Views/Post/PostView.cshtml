@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BulletinBoardSampleFrame.ViewModel.Post.PostViewModel>
+@model PagedList.IPagedList<BulletinBoardSampleFrame.ViewModel.Post.PostViewModel>
+@using PagedList.Mvc;
 
 @{ ViewBag.Title = "View";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,7 +11,7 @@
 <h3>Post List</h3>
 <br />
 @section usage{
-    <link href="~/Resource/css/table.css" rel="stylesheet" />
+    <link href="~/Resource/lib/css/table.css" rel="stylesheet" />
 }
 @section script
 {
@@ -28,7 +29,7 @@
     <br />
     <br />
     <br />
-    <table class="table table-hover">
+    <table class="table table-bordered">
         <tr>
             <th>
                 Post Title
@@ -51,38 +52,35 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.title)
+                    @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.description)
+                    @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.CreatedName)
+                    @Html.DisplayFor(modelItem => item.CreatedUser)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.created_at)
+                    @Html.DisplayFor(modelItem => item.Created_at)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { @id = item.id }, new { @class = "btn btn-success" }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.id }, new { onclick = "return confirm('Are sure wants to delete?');" })
+                    @Html.ActionLink("Edit", "Edit", new { @id = item.Id }, new { @class = "btn btn-success" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })
                 </td>
             </tr>
         }
     </table>
-}
-<div class="container" style="text-align:left">
-    <ul class="pagination">
-        <li><a href="#">«</a></li>
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">4</a></li>
-        <li><a href="#">5</a></li>
-        <li><a href="#">6</a></li>
-        <li><a href="#">7</a></li>
-        <li><a href="#">8</a></li>
-        <li><a href="#">9</a></li>
-        <li><a href="#">»</a></li>
-    </ul>
-</div>
+    <div id="container" style="margin-left: 20px">
+        <p></p>
+        <p></p>
+        <div class="pagination" style="margin-left: 400px">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+            of @Model.PageCount
+            @if ((string)Session["Type"] == "User")
+            {@Html.PagedListPager(Model, page => Url.Action("PostList", new { page }))}
+        else
+        { @Html.PagedListPager(Model, page => Url.Action("PostView", new { page }))}
 
+        </div>
+    </div>
+}

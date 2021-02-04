@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -20,21 +20,20 @@
                 {
             <li>@Html.ActionLink("Users", "UserList", "User")</li>}
                 <li>@Html.ActionLink("User", "UserProfile", "User")</li>
-                @if (@Session["Type"].ToString() != "Visitor")
+                @if (@Session["Type"].ToString() == "Admin" || @Session["Type"].ToString() == "Visitor")
                 {
             <li>@Html.ActionLink("Posts", "PostView", "Post")</li>}
-                @if (@Session["Type"].ToString() == "Visitor")
+                else
                 {
-            <li>@Html.ActionLink("Posts", "PostViewForVisitor", "Post")</li>}
+            <li>@Html.ActionLink("Posts", "PostList", "Post")</li>}
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li>@Html.ActionLink("LogInUsername", "Login", "Login")</li>
+                <li><a href="#">@Session["Name"]</a></li>
                 <li>@Html.ActionLink("LogOut", "LogOut", "Login")</li>
             </ul>
         </div>
     </nav>
 
-    
     <div class="container body-content">
         @RenderBody()
         <hr />

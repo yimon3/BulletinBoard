@@ -1,4 +1,5 @@
-﻿@model IEnumerable<BulletinBoardSampleFrame.ViewModel.User.UserViewModel>
+@model PagedList.IPagedList<BulletinBoardSampleFrame.ViewModel.User.UserViewModel>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "UserList";
 }
@@ -8,18 +9,19 @@
 }
 <br />
 <h2>User List</h2>
+<br />
 @using (Html.BeginForm("Search", "User", FormMethod.Post))
 {
     <div>
-        <input type="text" value="Name" />
-        <input type="text" value="Email" />
-        <input type="text" value="Created From" />
-        <input type="text" value="Created To" />
+        <input type="text" value="Name" name="name" />
+        <input type="text" value="Email" name="email" />
+        <input type="text" value="Created From" name="createdFrom" />
+        <input type="text" value="Created To" name="createdTo" />
         <input type="submit" class="btn btn-info" value="Search" />
         <input type="button" class="btn btn-danger" value="Add" onclick="location.href='@Url.Action("User", "User")'" />
     </div>
     <br />
-    <table class="table table-hover">
+    <table class="table table-bordered">
         <tr>
             <th>Name</th>
             <th>Email</th>
@@ -33,33 +35,28 @@
         </tr>
         @foreach (var item in Model)
         {
+
             <tr>
-                <td>@Html.DisplayFor(m => item.name)</td>
-                <td>@Html.DisplayFor(m => item.email) </td>
-                <td>@Html.DisplayFor(m => item.createdUser) </td>
-                <td>@Html.DisplayFor(m => item.phone) </td>
-                <td>@Html.DisplayFor(m => item.dob) </td>
-                <td>@Html.DisplayFor(m => item.address) </td>
-                <td>@Html.DisplayFor(m => item.created_at) </td>
-                <td>@Html.DisplayFor(m => item.updated_at) </td>
-                <td>@Html.ActionLink("Delete", "Delete", new { id = item.id }, new { onclick = "return confirm('Are sure wants to delete?');" })</td>
+                <td>@Html.DisplayFor(m => item.Name)</td>
+                <td>@Html.DisplayFor(m => item.Email) </td>
+                <td>@Html.DisplayFor(m => item.CreatedUser)</td>
+                <td>@Html.DisplayFor(m => item.Phone) </td>
+                <td>@Html.DisplayFor(m => item.Dob) </td>
+                <td>@Html.DisplayFor(m => item.Address) </td>
+                <td>@Html.DisplayFor(m => item.Created_at) </td>
+                <td>@Html.DisplayFor(m => item.Updated_at) </td>
+                <td>@Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { onclick = "return confirm('Are sure wants to delete?');" })</td>
             </tr>
         }
     </table>
-    <div class="container" style="text-align:left">
-        <ul class="pagination">
-            <li><a href="#">«</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li><a href="#">6</a></li>
-            <li><a href="#">7</a></li>
-            <li><a href="#">8</a></li>
-            <li><a href="#">9</a></li>
-            <li><a href="#">»</a></li>
-        </ul>
+    <div id="container" style="margin-left: 20px">
+        <p></p>
+        <p></p>
+        <div class="pagination" style="margin-left: 400px">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+            of @Model.PageCount
+            @Html.PagedListPager(Model, page => Url.Action("UserList", new { page }))
+        </div>
     </div>
 }
 

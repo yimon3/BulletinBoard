@@ -10,14 +10,13 @@
 namespace BulletinBoardSampleFrame.Models
 {
     using System;
-    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class BulletinBoardEntity : DbContext
+    public partial class BulletinBoardEntities5 : DbContext
     {
-        public BulletinBoardEntity()
-            : base("name=BulletinBoardEntity")
+        public BulletinBoardEntities5()
+            : base("name=BulletinBoardEntities5")
         {
         }
     
@@ -29,6 +28,5 @@ namespace BulletinBoardSampleFrame.Models
         public virtual DbSet<post> posts { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<password_resets> password_resets { get; set; }
-        public IEnumerable<object> user { get; internal set; }
     }
 }

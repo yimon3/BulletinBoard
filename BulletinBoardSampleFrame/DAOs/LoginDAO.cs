@@ -1,9 +1,7 @@
-﻿using BulletinBoardSampleFrame.Models;
+using BulletinBoardSampleFrame.Models;
 using BulletinBoardSampleFrame.ViewModel.Login;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace BulletinBoardSampleFrame.DAOs
 {
@@ -13,7 +11,7 @@ namespace BulletinBoardSampleFrame.DAOs
     /// </summary>
     public class LoginDAO
     {
-        BulletinBoardEntity db = new BulletinBoardEntity();
+        BulletinBoardEntities5 db = new BulletinBoardEntities5();
 
         /// <summary>
         /// This is login 
@@ -22,7 +20,7 @@ namespace BulletinBoardSampleFrame.DAOs
         /// <returns></returns>
         public user Login(LoginModel model)
         {
-            var obj = db.users.Where(a => a.email.Equals(model.email) && a.password.Equals(model.password)).FirstOrDefault();
+            var obj = db.users.Where(a => a.email.Equals(model.Email) && a.password.Equals(model.Password)).FirstOrDefault();
             return obj;
         }
 
@@ -33,12 +31,13 @@ namespace BulletinBoardSampleFrame.DAOs
         /// <returns></returns>
         public user ChangePassword(LoginModel login)
         {
-            var data = db.users.Where(u => u.password == login.password).FirstOrDefault();
+            var data = db.users.Where(u => u.password == login.Password).FirstOrDefault();
             if (data != null)
             {
-                if (login.newPassword == login.confirmPassword)
+                if (login.NewPassword == login.ConfirmPassword)
                 {
-                    data.password = login.confirmPassword;
+                    data.password = login.ConfirmPassword;
+                    data.updated_at = DateTime.Now;
                     db.SaveChanges();
                 }
             }

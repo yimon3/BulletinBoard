@@ -1,10 +1,8 @@
-﻿using BulletinBoardSampleFrame.DAO;
+using BulletinBoardSampleFrame.DAO;
 using BulletinBoardSampleFrame.Models;
 using BulletinBoardSampleFrame.ViewModel.User;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace BulletinBoardSampleFrame.Services
 {
@@ -16,9 +14,9 @@ namespace BulletinBoardSampleFrame.Services
         /// This is to get user list
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<UserViewModel> ShowUser()
+        public IEnumerable<UserViewModel> showUser()
         {
-            var user = userDAO.GetUser();
+            var user = userDAO.getUser();
             return user;
         }
 
@@ -26,9 +24,9 @@ namespace BulletinBoardSampleFrame.Services
         /// This is to get user list by keyword
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<UserViewModel> GetUserList(string search, string name)
+        public IEnumerable<UserViewModel> getUserList(string search, string name, DateTime? createdTo, DateTime? createdFrom)
         {
-            var userList = userDAO.GetUserList(search, name);
+            var userList = userDAO.getUserList(search, name, createdTo, createdFrom);
             return userList;
         }
 
@@ -43,7 +41,16 @@ namespace BulletinBoardSampleFrame.Services
         }
 
         /// <summary>
-        /// This is to edit user for return
+        /// This is to delete user
+        /// </summary>
+        /// <param name="userId"></param>
+        public void DeleteUser(int userId)
+        {
+            userDAO.DeleteUser(userId);
+        }
+
+        /// <summary>
+        /// This is edit user for view
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -53,21 +60,12 @@ namespace BulletinBoardSampleFrame.Services
         }
 
         /// <summary>
-        /// This is to edit user data into database
+        /// This is to edit user into database
         /// </summary>
         /// <param name="userView"></param>
         public void EditConfirmUser(UserViewModel userView)
         {
             userDAO.EditConfirmUser(userView);
-        }
-
-        /// <summary>
-        /// This is to delete user
-        /// </summary>
-        /// <param name="userId"></param>
-        public void DeleteUser(int userId)
-        {
-            userDAO.DeleteUser(userId);
         }
     }
 }

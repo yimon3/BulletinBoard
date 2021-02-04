@@ -5,34 +5,33 @@
 
 <h2>Update Post Confirmation</h2>
 <br />
-@using (Html.BeginForm("EditPost","Post", new { id = Model.id }))
+@using (Html.BeginForm("EditPost","Post", new { id = Model.Id }))
 {
     <div class="form-group">
         <div class="col-sm-3">
-            @Html.LabelFor(m => m.title)
+            @Html.LabelFor(m => m.Title)
         </div>
-        @Html.DisplayFor(m => m.title)
-        @Html.HiddenFor(m => m.title)
+        @Html.DisplayFor(m => m.Title)
+        @Html.HiddenFor(m => m.Title)
     </div>
     <div class="form-group">
         <div class="col-sm-3">
-            @Html.LabelFor(m => m.description)
+            @Html.LabelFor(m => m.Description)
         </div>
-        @Html.DisplayFor(m => m.description)
-        @Html.HiddenFor(m => m.description)
+        @Html.DisplayFor(m => m.Description)
+        @Html.HiddenFor(m => m.Description)
     </div>
     <div class="form-group">
         <div class="col-sm-3">
-            @Html.LabelFor(m => m.status)
+            @Html.LabelFor(m => m.Status)
         </div>
-        @Html.DisplayFor(m => m.status)
-        @Html.HiddenFor(m => m.status)
+        @Html.DisplayFor(m => m.Status)
+        @Html.HiddenFor(m => m.Status)
     </div><br />
     <div class="form-group">
         <div class="col-sm-3">
             <button type="submit" class="btn btn-primary">Update</button>
-            @Html.ActionLink("Cancel","EditPost","Post", new { @class = "btn btn-default" })
-            @Html.HiddenFor(m=>m.id)
+            @Html.ActionLink("Cancel","Edit", new { id = Model.Id , @class= "btn btn-default"})
         </div>
     </div><br />
 }

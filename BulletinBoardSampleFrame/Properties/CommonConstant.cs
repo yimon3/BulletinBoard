@@ -1,8 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
 namespace BulletinBoardSampleFrame.Properties
 {
     /// <summary>
@@ -10,6 +5,6 @@ namespace BulletinBoardSampleFrame.Properties
     /// </summary>
     public class CommonConstant
     {
-        public const int stauts_active = 1;
+        public const int status_active = 1;
     }
 }

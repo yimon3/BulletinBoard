@@ -39,7 +39,7 @@ warning 6002: The table/view 'BulletinBoard.dbo.password_resets' does not have a
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="password" Type="text" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="profile" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="type" Type="varchar" MaxLength="1" />
           <Property Name="phone" Type="varchar" MaxLength="20" />
@@ -124,7 +124,7 @@ warning 6002: The table/view 'BulletinBoard.dbo.password_resets' does not have a
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="profile" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="type" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
@@ -173,7 +173,7 @@ warning 6002: The table/view 'BulletinBoard.dbo.password_resets' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="BulletinBoardEntity" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="BulletinBoardEntities5" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="posts" EntityType="Self.post" />
           <EntitySet Name="users" EntityType="Self.user" />
           <EntitySet Name="password_resets" EntityType="Self.password_resets" />
@@ -191,7 +191,7 @@ warning 6002: The table/view 'BulletinBoard.dbo.password_resets' does not have a
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="BulletinBoardModelStoreContainer" CdmEntityContainer="BulletinBoardEntity">
+        <EntityContainerMapping StorageEntityContainer="BulletinBoardModelStoreContainer" CdmEntityContainer="BulletinBoardEntities5">
           <EntitySetMapping Name="posts">
             <EntityTypeMapping TypeName="BulletinBoardModel.post">
               <MappingFragment StoreEntitySet="posts">

@@ -1,7 +1,8 @@
-﻿using BulletinBoardSampleFrame.DAO;
+using BulletinBoardSampleFrame.DAO;
 using BulletinBoardSampleFrame.Models;
 using BulletinBoardSampleFrame.ViewModel.Post;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BulletinBoardSampleFrame.Services
 {
@@ -17,7 +18,41 @@ namespace BulletinBoardSampleFrame.Services
         /// </summary>
         public IEnumerable<PostViewModel> ShowPost()
         {
-            var postList = postDAO.getPosts();
+            var postList = postDAO.GetPosts();
+            return postList;
+        }
+
+        /// <summary>
+        /// This is to get user post list
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IEnumerable<PostViewModel> GetUserPost(int id)
+        {
+            var postUserList = postDAO.GetUserPosts(id);
+            return postUserList;
+        }
+
+        /// <summary>
+        /// This is to show user post by keyword
+        /// </summary>
+        /// <param name="search"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public IEnumerable<PostViewModel> ShowUserPostByKeyword(string search, int id)
+        {
+            var postList = postDAO.GetUserPostList(search, id);
+            return postList;
+        }
+
+        /// <summary>
+        /// This is to show post by keyword
+        /// </summary>
+        /// <param name="search"></param>
+        /// <returns></returns>
+        public IEnumerable<PostViewModel> ShowPostByKeyword(string search)
+        {
+            var postList = postDAO.GetPostList(search);
             return postList;
         }
 
@@ -50,23 +85,30 @@ namespace BulletinBoardSampleFrame.Services
         }
 
         /// <summary>
-        /// This is to show post by keyword
+        /// This is to delete post
         /// </summary>
-        /// <param name="search"></param>
-        /// <returns></returns>
-        public IEnumerable<PostViewModel> ShowPostByKeyword(string search)
+        /// <param name="postId"></param>
+        public void DeletePost(int postId, int loginId)
         {
-            var postList = postDAO.getPostList(search);
-            return postList;
+            postDAO.DeletePost(postId, loginId);
         }
 
         /// <summary>
-        /// This is for delete post
+        /// This is upload csv data
         /// </summary>
-        /// <param name="postId"></param>
-        public void DeletePost(int postId)
+        /// <param name="postData"></param>
+        public void UploadCSV(post postData)
         {
-            postDAO.DeletePost(postId);
+            postDAO.UploadCSV(postData);
+        }
+
+        /// <summary>
+        /// This is download csv file
+        /// </summary>
+        /// <returns></returns>
+        public IQueryable<post> DownloadCSV()
+        {
+            return postDAO.DownloadCSV();
         }
     }
 }
