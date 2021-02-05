@@ -241,6 +241,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\EncryptDecryptPassword.cs" />
     <Compile Include="ViewModel\Login\LoginModel.cs" />
     <Compile Include="ViewModel\Post\PostViewModel.cs" />
     <Compile Include="ViewModel\User\UserViewModel.cs" />
@@ -480,7 +481,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Resources\lib\images\" />
-    <Folder Include="Utility\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\lib\fonts\glyphicons-halflings-regular.woff2" />

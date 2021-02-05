@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
 using WebMatrix.WebData;
+using BulletinBoardSampleFrame.Utility;
 
 namespace BulletinBoardSampleFrame.Controllers
 {
@@ -19,6 +20,7 @@ namespace BulletinBoardSampleFrame.Controllers
     public class LoginController : Controller
     {
         LoginService loginService = new LoginService();
+        EncryptDecryptPassword endePassword = new EncryptDecryptPassword();
 
         // GET: Login
         public ActionResult Index()
@@ -41,8 +43,9 @@ namespace BulletinBoardSampleFrame.Controllers
         [HttpPost]
         public ActionResult Login(LoginModel model)
         {
+            model.Password = endePassword.Encrypt(model.Password);
             var obj = loginService.Login(model);
-            
+
             if (obj != null)
             {
                 FormsAuthentication.SetAuthCookie(model.Email,model.RememberMe);

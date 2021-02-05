@@ -40,17 +40,5 @@ namespace BulletinBoardSampleFrame.ViewModel.Post
 
         //update user id
         public int UpdatedUserId { get; set; }
-
-        ///<summary>
-        /// Gets or sets CurrentPageIndex.
-        ///</summary>
-        public int CurrentPageIndex { get; set; }
-
-        ///<summary>
-        /// Gets or sets PageCount.
-        ///</summary>
-        public int PageCount { get; set; }
-
-        public int PageNumber { get; set; }
     }
 }

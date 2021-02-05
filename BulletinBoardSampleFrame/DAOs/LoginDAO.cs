@@ -1,4 +1,5 @@
 using BulletinBoardSampleFrame.Models;
+using BulletinBoardSampleFrame.Utility;
 using BulletinBoardSampleFrame.ViewModel.Login;
 using System;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace BulletinBoardSampleFrame.DAOs
     public class LoginDAO
     {
         BulletinBoardEntities5 db = new BulletinBoardEntities5();
+        EncryptDecryptPassword endePassword = new EncryptDecryptPassword();
 
         /// <summary>
         /// This is login 
@@ -31,11 +33,14 @@ namespace BulletinBoardSampleFrame.DAOs
         /// <returns></returns>
         public user ChangePassword(LoginModel login)
         {
+            login.Password = endePassword.Encrypt(login.Password);
             var data = db.users.Where(u => u.password == login.Password).FirstOrDefault();
             if (data != null)
             {
                 if (login.NewPassword == login.ConfirmPassword)
                 {
+                    login.NewPassword = endePassword.Encrypt(login.NewPassword);
+                    login.ConfirmPassword = endePassword.Encrypt(login.ConfirmPassword);
                     data.password = login.ConfirmPassword;
                     data.updated_at = DateTime.Now;
                     db.SaveChanges();

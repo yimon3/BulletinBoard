@@ -1,5 +1,6 @@
 using BulletinBoardSampleFrame.Models;
 using BulletinBoardSampleFrame.Services;
+using BulletinBoardSampleFrame.Utility;
 using BulletinBoardSampleFrame.ViewModel.User;
 using PagedList;
 using System;
@@ -17,6 +18,7 @@ namespace BulletinBoardSampleFrame.Controllers
     {
         #region Variables
         UserService userService = new UserService();
+        EncryptDecryptPassword endePassword = new EncryptDecryptPassword();
         #endregion
 
         #region public Action method
@@ -116,7 +118,7 @@ namespace BulletinBoardSampleFrame.Controllers
             
             newUser.name = userData.Name;
             newUser.email = userData.Email;
-            newUser.password = userData.Password;
+            newUser.password = endePassword.Encrypt(userData.Password);
             newUser.profile = userData.Profile;
             //Password Decrypt
             //userData.Password = endePassword.Decrypt(newUser.password);
