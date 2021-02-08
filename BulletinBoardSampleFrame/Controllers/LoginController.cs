@@ -30,9 +30,22 @@ namespace BulletinBoardSampleFrame.Controllers
 
         //Get : login
         [HttpGet]
+        [Authorize]
         public ActionResult Login()
         {
-            return View();
+            if (!string.IsNullOrEmpty(Request.Cookies["Email"].Value) && !string.IsNullOrEmpty(Request.Cookies["Password"].Value))
+            {
+                var login = new LoginModel
+                {
+                    Email = Request.Cookies["Email"].Value,
+                    Password = Request.Cookies["Password"].Value
+                };
+                return View(login);
+            }
+            else
+            {
+                return View();
+            }
         }
 
         /// <summary>
@@ -45,10 +58,9 @@ namespace BulletinBoardSampleFrame.Controllers
         {
             model.Password = endePassword.Encrypt(model.Password);
             var obj = loginService.Login(model);
-
             if (obj != null)
             {
-                FormsAuthentication.SetAuthCookie(model.Email,model.RememberMe);
+                FormsAuthentication.SetAuthCookie(model.Email, model.RememberMe);
                 Session["Id"] = obj.id;
                 Session["Name"] = obj.name.ToString();
                 Session["Email"] = obj.email.ToString();
@@ -69,11 +81,24 @@ namespace BulletinBoardSampleFrame.Controllers
                 Session["DOB"] = obj.dob;
                 Session["Address"] = obj.address.ToString();
                 Session["Profile"] = obj.profile.ToString();
+
+                if (model.RememberMe)
+                {
+                    obj.password = endePassword.Decrypt(model.Password);
+                    Response.Cookies["Email"].Value = obj.email.ToString();
+                    Response.Cookies["Password"].Value = obj.password.ToString();
+                    Response.Cookies["Email"].Expires = DateTime.Now.AddDays(30);
+                    Response.Cookies["Password"].Expires = DateTime.Now.AddDays(30);
+                }
+                else
+                {
+                    Response.Cookies["Email"].Expires = DateTime.Now.AddDays(-1);
+                    Response.Cookies["Password"].Expires = DateTime.Now.AddDays(-1);
+                }
             }
-            else
-            { 
-                ViewData["Message"] = "Email or Password is incorrect";
-                return View(model);
+            else if (obj == null)
+            {
+                return RedirectToAction("ForgotPassword", "Login");
             }
             return RedirectToAction("PostViewDefault", "Post");
         }
@@ -95,6 +120,19 @@ namespace BulletinBoardSampleFrame.Controllers
                 ModelState.Clear();
             }
             return View("ChangePassword");
+        }
+
+        /// <summary>
+        /// Clear input for forgot password page
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ClearForgotPsw()
+        {
+            if (ModelState.IsValid)
+            {
+                ModelState.Clear();
+            }
+            return View("ForgotPassword");
         }
 
         /// <summary>
@@ -135,5 +173,40 @@ namespace BulletinBoardSampleFrame.Controllers
             }
             return RedirectToAction("PostView", "Post");
         }
+
+        /// <summary>
+        /// Get: Forgot Password
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Post: Forgot Password
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult ForgotPassword(LoginModel login)
+        {
+            var data = loginService.ChangePassword(login);
+            if (data != null)
+            {
+                if (login.NewPassword != login.ConfirmPassword)
+                {
+                    ViewData["Message"] = "New Password and Confirm password must same.";
+                    return View(login);
+                }
+            }
+            else
+            {
+                ViewData["Message"] = "Wrong Old Password";
+                return View(login);
+            }
+            return RedirectToAction("Login", "Login");
+        }
     }
 }
+
