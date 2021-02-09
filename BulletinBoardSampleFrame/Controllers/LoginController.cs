@@ -33,16 +33,17 @@ namespace BulletinBoardSampleFrame.Controllers
         [Authorize]
         public ActionResult Login()
         {
-            if (!string.IsNullOrEmpty(Request.Cookies["Email"].Value) && !string.IsNullOrEmpty(Request.Cookies["Password"].Value))
+            try
             {
-                var login = new LoginModel
+                LoginModel login = new LoginModel();
+                if (!String.IsNullOrEmpty(Request.Cookies["Email"].Value) && !String.IsNullOrEmpty(Request.Cookies["Password"].Value))
                 {
-                    Email = Request.Cookies["Email"].Value,
-                    Password = Request.Cookies["Password"].Value
-                };
+                    login.Email = Request.Cookies["Email"].Value;
+                    login.Password = Request.Cookies["Password"].Value;
+                }
                 return View(login);
             }
-            else
+            catch (NullReferenceException)
             {
                 return View();
             }
