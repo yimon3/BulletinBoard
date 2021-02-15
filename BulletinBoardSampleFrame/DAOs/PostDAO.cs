@@ -1,10 +1,10 @@
 using BulletinBoardSampleFrame.Models;
+using BulletinBoardSampleFrame.Properties;
 using BulletinBoardSampleFrame.ViewModel.Post;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using BulletinBoardSampleFrame.Properties;
 
 namespace BulletinBoardSampleFrame.DAO
 {
@@ -15,8 +15,11 @@ namespace BulletinBoardSampleFrame.DAO
     /// 
     public class PostDAO
     {
+        #region member variables
         BulletinBoardEntities5 db = new BulletinBoardEntities5();
+        #endregion
 
+        #region public methods
         /// <summary>
         /// This is to get all post and created user name from database for admin and visitor.
         /// </summary>
@@ -253,7 +256,7 @@ namespace BulletinBoardSampleFrame.DAO
             data.deleted_at = DateTime.Now;
             data.deleted_user_id = loginId;
             db.Entry(data).State = EntityState.Modified;
-            
+
             db.SaveChanges();
         }
 
@@ -278,5 +281,6 @@ namespace BulletinBoardSampleFrame.DAO
 
             return postData;
         }
+        #endregion
     }
 }

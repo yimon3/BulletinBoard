@@ -6,10 +6,17 @@ using System.Collections.Generic;
 
 namespace BulletinBoardSampleFrame.Services
 {
+    /// <summary>
+    /// Service Class
+    /// Contains all method validing and connecting the Controller and DAO
+    /// </summary>
     public class UserService
     {
+        #region member variables
         UserDAO userDAO = new UserDAO();
+        #endregion
 
+        #region public methods
         /// <summary>
         /// This is to get user list
         /// </summary>
@@ -67,5 +74,6 @@ namespace BulletinBoardSampleFrame.Services
         {
             userDAO.EditConfirmUser(userView);
         }
+        #endregion
     }
 }

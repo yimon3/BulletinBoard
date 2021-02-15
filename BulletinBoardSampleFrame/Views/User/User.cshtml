@@ -79,7 +79,7 @@ if (ViewData["Message"] != null)
             @Html.LabelFor(m => m.Dob)
         </div>
         <div class="col-sm-3">
-            @Html.TextBoxFor(m => m.Dob, new { @class = "datepicker form-control" })
+            @Html.TextBoxFor(m => m.Dob, new { @class = "form-control datepicker" })
         </div>
     </div>
     <div class="form-group row">
@@ -115,8 +115,7 @@ if (ViewData["Message"] != null)
 {
     <script src="~/Resources/lib/js/jquery-ui-1.12.1.min.js"></script>
     <script src="~/Resources/lib/js/jquery.min.js"></script>
-    <script type="text/javascript">
-
+    <script>
         $(document).ready(function () {
             $(".datepicker").datepicker({
                 dateFormat: "dd-mm-yy",
@@ -145,7 +144,6 @@ if (ViewData["Message"] != null)
         $("#imgInp").change(function () {
             readURL(this);
         });
-
     </script>
 }
 

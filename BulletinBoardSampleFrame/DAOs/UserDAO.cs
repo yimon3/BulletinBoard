@@ -6,10 +6,18 @@ using System.Linq;
 
 namespace BulletinBoardSampleFrame.DAO
 {
+    /// <summary>
+    ///  DAO (Data Access Class)
+    ///  contains all method that connected to the database
+    /// </summary>
+    /// 
     public class UserDAO
     {
+        #region member variables
         BulletinBoardEntities5 db = new BulletinBoardEntities5();
+        #endregion
 
+        #region public methods
         /// <summary>
         /// This is to get user list
         /// </summary>
@@ -179,5 +187,6 @@ namespace BulletinBoardSampleFrame.DAO
                 db.SaveChanges();
             }
         }
+        #endregion
     }
 }

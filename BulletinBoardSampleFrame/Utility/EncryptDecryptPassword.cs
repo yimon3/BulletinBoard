@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Web;
 
 namespace BulletinBoardSampleFrame.Utility
 {
@@ -13,6 +10,7 @@ namespace BulletinBoardSampleFrame.Utility
     /// </summary>
     public class EncryptDecryptPassword
     {
+        #region public methods
         /// <summary>
         /// This is for encrypt password
         /// </summary>
@@ -66,5 +64,6 @@ namespace BulletinBoardSampleFrame.Utility
             }
             return cipherText;
         }
+        #endregion
     }
 }

@@ -7,12 +7,16 @@ using System.Linq;
 namespace BulletinBoardSampleFrame.Services
 {
     /// <summary>
-    ///     Service Class
-    ///     Contains all method validing and connecting the Controller and DAO
+    /// Service Class
+    /// Contains all method validing and connecting the Controller and DAO
     /// </summary>
     public class PostServices
     {
+        #region member variables
         PostDAO postDAO = new PostDAO();
+        #endregion
+
+        #region public methods
         /// <summary>
         ///     This is to show post list.
         /// </summary>
@@ -110,5 +114,6 @@ namespace BulletinBoardSampleFrame.Services
         {
             return postDAO.DownloadCSV();
         }
+        #endregion
     }
 }

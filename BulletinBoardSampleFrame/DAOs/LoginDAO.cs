@@ -12,8 +12,22 @@ namespace BulletinBoardSampleFrame.DAOs
     /// </summary>
     public class LoginDAO
     {
+        #region memberVariables
         BulletinBoardEntities5 db = new BulletinBoardEntities5();
         EncryptDecryptPassword endePassword = new EncryptDecryptPassword();
+        #endregion
+
+        #region public methods
+        /// <summary>
+        /// Login Form
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public user LoginForm(LoginModel model)
+        {
+            var obj = db.users.Where(w => w.email.Equals(model.Email)).FirstOrDefault();
+            return obj;
+        }
 
         /// <summary>
         /// This is login 
@@ -48,5 +62,17 @@ namespace BulletinBoardSampleFrame.DAOs
             }
             return data;
         }
+
+        /// <summary>
+        /// This is for forgot password
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public user ForgotPassword(string email)
+        {
+            var account = db.users.Where(a => a.email == email).FirstOrDefault();
+            return account;
+        }
+        #endregion
     }
 }

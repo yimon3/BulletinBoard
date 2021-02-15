@@ -1,0 +1,62 @@
+@model List<BulletinBoardSampleFrame.ViewModel.Login.TwitterViewModel>
+@{ Layout = null; }
+<head>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">SCM BulletinBoard</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">@TempData["Name"]</a></li>
+            <li>@Html.ActionLink("LogOut", "LogOut", "Login")</li>
+        </ul>
+    </div>
+</nav>
+<div class="container-fluid">
+    <h3>Tweet List</h3>
+    <br />
+    <div class="col-lg-10">
+        @using (Html.BeginForm())
+        {
+<table class="table table-bordered">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Created Date
+        </th>
+        <th>
+            Tweets
+        </th>
+    </tr>
+
+    @foreach (var tweet in Model)
+    {
+<tr>
+    <td>
+       @Html.DisplayFor(modelitem => tweet.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelitem => tweet.CreatedDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelitem => tweet.Status)
+    </td>
+</tr>}
+
+</table>}
+
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+<hr />
+<div class="container body-content">
+    <footer>
+        <p>&copy; @DateTime.Now.Year - SCM Bulletin Board</p>
+    </footer>
+</div>

@@ -6,5 +6,7 @@ namespace BulletinBoardSampleFrame.Properties
     public class CommonConstant
     {
         public const int status_active = 1;
+
+        public const int pageSize = 5;
     }
 }

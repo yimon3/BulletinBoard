@@ -1,11 +1,11 @@
 using BulletinBoardSampleFrame.Models;
+using BulletinBoardSampleFrame.Properties;
 using BulletinBoardSampleFrame.Services;
 using BulletinBoardSampleFrame.Utility;
 using BulletinBoardSampleFrame.ViewModel.User;
 using PagedList;
 using System;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
@@ -66,10 +66,9 @@ namespace BulletinBoardSampleFrame.Controllers
         /// <returns></returns>
         public ActionResult UserList(int? page)
         {
-            int pageSize = 5;
             int pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
 
-            var userList = userService.showUser().ToPagedList(pageIndex, pageSize);
+            var userList = userService.showUser().ToPagedList(pageIndex, CommonConstant.pageSize);
             return View("UserList", userList);
         }
 
@@ -78,12 +77,11 @@ namespace BulletinBoardSampleFrame.Controllers
         /// </summary>
         /// <param name="search"></param>
         /// <returns></returns>
-        public ActionResult Search(int? page,string name, string email, DateTime? createdTo, DateTime? createdFrom)
+        public ActionResult Search(int? page, string name, string email, DateTime? createdTo, DateTime? createdFrom)
         {
-            int pageSize = 5;
             int pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
 
-            var userList = userService.getUserList(name, email, createdTo, createdFrom).ToPagedList(pageIndex, pageSize);
+            var userList = userService.getUserList(name, email, createdTo, createdFrom).ToPagedList(pageIndex, CommonConstant.pageSize);
             return View("UserList", userList);
         }
 
@@ -98,7 +96,7 @@ namespace BulletinBoardSampleFrame.Controllers
             file = Request.Files[0];
             if (file != null && file.ContentLength > 0)
             {
-                var imageName = Path.GetFileName(file.FileName); 
+                var imageName = Path.GetFileName(file.FileName);
                 string physicalPath = Server.MapPath("~/Resources/lib/images/" + imageName);
                 file.SaveAs(physicalPath);
                 userViewModel.Profile = imageName;
@@ -115,13 +113,11 @@ namespace BulletinBoardSampleFrame.Controllers
         public ActionResult Save(UserViewModel userData)
         {
             user newUser = new user();
-            
+
             newUser.name = userData.Name;
             newUser.email = userData.Email;
             newUser.password = endePassword.Encrypt(userData.Password);
             newUser.profile = userData.Profile;
-            //Password Decrypt
-            //userData.Password = endePassword.Decrypt(newUser.password);
 
             if (userData.Type == "admin")
             {

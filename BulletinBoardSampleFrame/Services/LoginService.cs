@@ -5,12 +5,21 @@ using BulletinBoardSampleFrame.ViewModel.Login;
 namespace BulletinBoardSampleFrame.Services
 {
     /// <summary>
-    ///   Service Class
-    ///     Contains all method validing and connecting the Controller and DAO
+    /// Service Class
+    /// Contains all method validing and connecting the Controller and DAO
     /// </summary>
     public class LoginService
     {
+        #region member variables
         LoginDAO loginDAO = new LoginDAO();
+        #endregion
+
+        #region public methods
+        public user LoginForm(LoginModel model)
+        {
+            var obj = loginDAO.LoginForm(model);
+            return obj;
+        }
 
         /// <summary>
         /// This is login 
@@ -33,5 +42,17 @@ namespace BulletinBoardSampleFrame.Services
             var data = loginDAO.ChangePassword(login);
             return data;
         }
+
+        /// <summary>
+        /// This is to change password when user input wrong data
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public user ForgotPassword(string email)
+        {
+            var data = loginDAO.ForgotPassword(email);
+            return data;
+        }
+        #endregion
     }
 }

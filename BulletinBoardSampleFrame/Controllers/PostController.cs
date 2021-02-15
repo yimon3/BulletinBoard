@@ -6,7 +6,6 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -14,12 +13,15 @@ using System.Web.Mvc;
 namespace BulletinBoardSampleFrame.Controllers
 {
     /// <summary>
-    ///     This is Post Controller class.
+    /// This is Post Controller class.
     /// </summary>
     public class PostController : Controller
     {
+        #region member variables
         PostServices postServices = new PostServices();
+        #endregion
 
+        #region public action methods
         public ActionResult Index()
         {
             return View();
@@ -31,12 +33,11 @@ namespace BulletinBoardSampleFrame.Controllers
         /// <returns></returns>
         public ActionResult PostViewDefault(int? page)
         {
-            int pageSize = 5;
             int pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
 
-            var postList = postServices.ShowPost().ToPagedList(pageIndex, pageSize);
+            var postList = postServices.ShowPost().ToPagedList(pageIndex, CommonConstant.pageSize);
 
-            return View("PostViewDefault",postList);
+            return View("PostViewDefault", postList);
         }
 
         /// <summary>
@@ -45,13 +46,16 @@ namespace BulletinBoardSampleFrame.Controllers
         /// <param name="search">Search keyword for Post</param>
         public ActionResult PostView(int? page)
         {
-            int pageSize = 5;
             int pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
 
-            var postList = postServices.ShowPost().ToPagedList(pageIndex, pageSize);
-            if((string)Session["Type"] == "Admin")
+            var postList = postServices.ShowPost().ToPagedList(pageIndex, CommonConstant.pageSize);
+            if ((string)Session["Type"] == "Admin")
             {
                 return View("PostView", postList);
+            }
+            else if ((string)Session["Type"] == "User")
+            {
+                return RedirectToAction("PostList");
             }
             return View("PostViewForVisitor", postList);
         }
@@ -63,10 +67,9 @@ namespace BulletinBoardSampleFrame.Controllers
         public ActionResult PostList(int? page)
         {
             int id = (int)Session["Id"];
-            int pageSize = 5;
             int pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
 
-            var postList = postServices.GetUserPost(id).ToPagedList(pageIndex, pageSize);
+            var postList = postServices.GetUserPost(id).ToPagedList(pageIndex, CommonConstant.pageSize);
 
             return View("PostView", postList);
         }
@@ -176,7 +179,7 @@ namespace BulletinBoardSampleFrame.Controllers
                 ViewData["Message"] = "Duplicate Data are not inserted.";
                 return View("CreatePost", postData);
             }
-            if((string)Session["Type"] == "User")
+            if ((string)Session["Type"] == "User")
             {
                 return RedirectToAction("PostList", postData);
             }
@@ -202,17 +205,16 @@ namespace BulletinBoardSampleFrame.Controllers
         /// <returns></returns>
         public ActionResult Search(string searchString, int? page)
         {
-            int pageSize = 5;
             int pageIndex = page.HasValue ? Convert.ToInt32(page) : 1;
 
             if ((string)Session["Type"] != "Admin")
             {
                 int id = (int)Session["Id"];
-                var postData = postServices.ShowUserPostByKeyword(searchString, id).ToPagedList(pageIndex, pageSize);
+                var postData = postServices.ShowUserPostByKeyword(searchString, id).ToPagedList(pageIndex, CommonConstant.pageSize);
 
                 return RedirectToAction("PostList", postData);
             }
-            var postList = postServices.ShowPostByKeyword(searchString).ToPagedList(pageIndex, pageSize);
+            var postList = postServices.ShowPostByKeyword(searchString).ToPagedList(pageIndex, CommonConstant.pageSize);
 
             return View("PostView", postList);
         }
@@ -337,5 +339,6 @@ namespace BulletinBoardSampleFrame.Controllers
             byte[] bytes = Encoding.ASCII.GetBytes(csv);
             return File(bytes, "application/text", "PostData.csv");
         }
+        #endregion
     }
 }

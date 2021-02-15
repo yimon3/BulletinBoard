@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,35 +8,49 @@ namespace BulletinBoardSampleFrame.ViewModel.Post
     /// </summary>
     public class PostViewModel
     {
-        //Post id
+        /// <summary>
+        /// Post id
+        /// </summary>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        //Post Title
+        /// <summary>
+        /// Post title
+        /// </summary>
         [MaxLength(50)]
         [Required]
         [Display(Name = "Title")]
         public string Title { get; set; }
 
-        //Post Description
+        /// <summary>
+        /// Post description
+        /// </summary>
         [Required]
         [Display(Name = "Description")]
         public string Description { get; set; }
 
-        //Post Status (Public or Private)
+        /// <summary>
+        /// Post status
+        /// </summary>
         [Display(Name = "Status")]
         public bool Status { get; set; }
 
-        //Created Usernmae
+        /// <summary>
+        /// Created Usernmae
+        /// </summary>
         public string CreatedUser { get; set; }
 
+        /// <summary>
+        /// Create date
+        /// </summary>
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd}",
                ApplyFormatInEditMode = true)]
-        //Created Time
         public System.DateTime Created_at { get; set; }
 
-        //update user id
+        /// <summary>
+        /// update user id
+        /// </summary>
         public int UpdatedUserId { get; set; }
     }
 }

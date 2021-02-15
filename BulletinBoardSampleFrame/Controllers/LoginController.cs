@@ -1,17 +1,12 @@
 using BulletinBoardSampleFrame.Services;
-using BulletinBoardSampleFrame.Properties;
+using BulletinBoardSampleFrame.Utility;
 using BulletinBoardSampleFrame.ViewModel.Login;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNetCore.Identity;
 using System;
-using System.Net;
-using System.Net.Mail;
-using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
-using WebMatrix.WebData;
-using BulletinBoardSampleFrame.Utility;
-
+using TweetSharp;
 namespace BulletinBoardSampleFrame.Controllers
 {
     /// <summary>
@@ -19,9 +14,12 @@ namespace BulletinBoardSampleFrame.Controllers
     /// </summary>
     public class LoginController : Controller
     {
+        #region membervariable
         LoginService loginService = new LoginService();
         EncryptDecryptPassword endePassword = new EncryptDecryptPassword();
+        #endregion
 
+        #region public action methods
         // GET: Login
         public ActionResult Index()
         {
@@ -30,7 +28,6 @@ namespace BulletinBoardSampleFrame.Controllers
 
         //Get : login
         [HttpGet]
-        [Authorize]
         public ActionResult Login()
         {
             try
@@ -55,7 +52,7 @@ namespace BulletinBoardSampleFrame.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Login(LoginModel model)
+        public ActionResult Validate(LoginModel model)
         {
             model.Password = endePassword.Encrypt(model.Password);
             var obj = loginService.Login(model);
@@ -88,8 +85,8 @@ namespace BulletinBoardSampleFrame.Controllers
                     obj.password = endePassword.Decrypt(model.Password);
                     Response.Cookies["Email"].Value = obj.email.ToString();
                     Response.Cookies["Password"].Value = obj.password.ToString();
-                    Response.Cookies["Email"].Expires = DateTime.Now.AddDays(30);
-                    Response.Cookies["Password"].Expires = DateTime.Now.AddDays(30);
+                    Response.Cookies["Email"].Expires = DateTime.Now.AddMinutes(10);
+                    Response.Cookies["Password"].Expires = DateTime.Now.AddMinutes(10);
                 }
                 else
                 {
@@ -114,20 +111,11 @@ namespace BulletinBoardSampleFrame.Controllers
             return RedirectToAction("Login");
         }
 
-        public ActionResult ClearInput()
-        {
-            if (ModelState.IsValid)
-            {
-                ModelState.Clear();
-            }
-            return View("ChangePassword");
-        }
-
         /// <summary>
-        /// Clear input for forgot password page
+        /// This is for clear input data
         /// </summary>
         /// <returns></returns>
-        public ActionResult ClearForgotPsw()
+        public ActionResult ClearInput()
         {
             if (ModelState.IsValid)
             {
@@ -208,6 +196,77 @@ namespace BulletinBoardSampleFrame.Controllers
             }
             return RedirectToAction("Login", "Login");
         }
+
+        /// <summary>
+        /// This is for authentication of twitter account
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult TwitterAuth()
+        {
+            string Key = "P3xleqTzSi2myNSRgC7nkABSi";
+            string Secret = "Bt8resPY8UIP6AafYRgMMynmRyy1HKlLoXp63c1HegtXZVS9eH";
+
+            TwitterService service = new TwitterService(Key, Secret);
+
+            OAuthRequestToken requestToken = service.GetRequestToken("https://localhost:44323/Login/TwitterCallBack");
+
+            Uri uri = service.GetAuthenticationUrl(requestToken);
+
+            return Redirect(uri.ToString());
+        }
+
+        /// <summary>
+        /// This is to retrieve user data from twitter account
+        /// </summary>
+        /// <param name="oauth_token"></param>
+        /// <param name="oauth_verifier"></param>
+        /// <returns></returns>
+        public ActionResult TwitterCallback(string oauth_token, string oauth_verifier)
+        {
+            List<TwitterViewModel> lstTwitterModels = new List<TwitterViewModel>();
+            var requestToken = new OAuthRequestToken { Token = oauth_token };
+
+            string Key = "P3xleqTzSi2myNSRgC7nkABSi";
+            string Secret = "Bt8resPY8UIP6AafYRgMMynmRyy1HKlLoXp63c1HegtXZVS9eH";
+
+            try
+            {
+                TwitterService service = new TwitterService(Key, Secret);
+
+                OAuthAccessToken accessToken = service.GetAccessToken(requestToken, oauth_verifier);
+
+                service.AuthenticateWith(accessToken.Token, accessToken.TokenSecret);
+
+                var currentTweets = service.ListTweetsOnUserTimeline(new ListTweetsOnUserTimelineOptions
+                {
+                    ScreenName = "Katieeee59",
+                    Count = 200,
+                }).ToList();
+
+                foreach (var tweet in currentTweets)
+                {
+                    TempData["Name"] = tweet.User.Name;
+                    TwitterViewModel twitterView = new TwitterViewModel();
+                    twitterView.Name = tweet.User.Name;
+                    twitterView.CreatedDate = tweet.CreatedDate;
+                    twitterView.Status = tweet.Text;
+
+                    lstTwitterModels.Add(twitterView);
+                }
+                return View(lstTwitterModels);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        #endregion
     }
 }
+
+
+
+
+
 
