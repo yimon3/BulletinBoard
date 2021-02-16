@@ -355,7 +355,6 @@
     <Compile Include="ViewModel\User\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\lib\js\GmailLogin.js" />
     <Content Include="Resources\lib\themes\base\accordion.css" />
     <Content Include="Resources\lib\themes\base\all.css" />
     <Content Include="Resources\lib\themes\base\autocomplete.css" />
